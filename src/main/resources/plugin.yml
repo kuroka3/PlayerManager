@@ -1,0 +1,12 @@
+name: PlayerManager
+version: '${version}'
+main: io.github.kuroka3.playermanager.PlayerManager
+api-version: 1.19
+
+commands:
+  managerban:
+    description: asdf
+  managerwarn:
+    description: asdf
+  managerunban:
+    description: asdf
