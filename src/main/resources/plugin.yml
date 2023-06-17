@@ -1,12 +1,32 @@
 name: PlayerManager
 version: '${version}'
 main: io.github.kuroka3.playermanager.PlayerManager
-api-version: 1.19
+api-version: '1.20'
 
 commands:
   managerban:
-    description: asdf
+    description: Ban player with this plugin
+    usage: /managerban [Player] [Reason]
   managerwarn:
-    description: asdf
+    description: Warn player with this plugin
+    usage: /managerwarn [Player] [Reason]
   managerunban:
-    description: asdf
+    description: Unban player with this plugin
+    usage: /managerunban [Player] [Reason]
+  managermute:
+    description: Mute player with this plugin
+    usage: /managermute [Player] [Reason]
+  managerunmute:
+    description: Unmute player with this plugin
+    usage: /managerunmute [Player] [Reason]
+
+permissions:
+  playermanager.ban:
+    default: false
+    description: need for ban/unban player
+  playermanager.warn:
+    default: false
+    description: need for warn/unwarn player
+  playermanager.mute:
+    default: false
+    description: need for mute/unmute player

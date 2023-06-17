@@ -8,11 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 
 public class ConnectEvent implements Listener {
 
@@ -35,6 +30,7 @@ public class ConnectEvent implements Listener {
                 object.put("ban", false);
                 object.put("banre", "");
                 object.put("banid", "");
+                object.put("mute", false);
 
                 jsonObject.put(e.getPlayer().getUniqueId().toString(), object);
             } else if(!userObject.get("name").equals(e.getPlayer().getName())) {

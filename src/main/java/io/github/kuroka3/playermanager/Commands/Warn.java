@@ -5,13 +5,14 @@ import io.github.kuroka3.playermanager.PlayerManager;
 import io.github.kuroka3.playermanager.Utils.JSONFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.CommandBlock;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
 
 
 public class Warn implements CommandExecutor {
@@ -21,13 +22,37 @@ public class Warn implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sd, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         try {
-            if (sd instanceof CommandBlock || args.length == 0) {
-                return false;
+            if (sd instanceof CommandBlock) {
+                return true;
+            }
+
+            if (args.length == 0) {
+                sd.sendMessage(mod + ChatColor.RED + "플레이어를 지정해 주십시오");
+                return true;
+            }
+
+            if (!sd.hasPermission("playermanager.warn") && !(sd instanceof ConsoleCommandSender)) {
+                sd.sendMessage(mod + ChatColor.RED + "이 명령어를 사용할 권한이 없습니다");
+                return true;
             }
 
             JSONFile playerJson = new JSONFile(PlayerManager.getPlugin(PlayerManager.class).getDataFolder() + "/players.json");
 
-            ManagedPlayer target = new ManagedPlayer(Bukkit.getServer().getPlayer(args[0]), playerJson);
+            Player player2 = Bukkit.getServer().getPlayer(args[0]);
+
+            ManagedPlayer target;
+
+            if(player2 == null) {
+                OfflinePlayer offlinePlayer = Bukkit.getServer().getOfflinePlayer(args[0]);
+                if(offlinePlayer.hasPlayedBefore()) {
+                    target = new ManagedPlayer(offlinePlayer, playerJson);
+                } else {
+                    sd.sendMessage(mod + ChatColor.RED + "해당 유저를 찾을 수 없습니다.");
+                    return true;
+                }
+            } else {
+                target = new ManagedPlayer(player2, playerJson);
+            }
 
             StringBuilder sb = new StringBuilder();
 
@@ -50,14 +75,17 @@ public class Warn implements CommandExecutor {
                 saveReason = reason;
             }
 
-            sd.sendMessage(mod + ChatColor.YELLOW + target.getPlayer().getName() + ChatColor.RED + "님에게 경고를 1회 부여했습니다: " + ChatColor.GOLD + saveReason + ChatColor.YELLOW + " (총 " + target.getWarns() + "회)");
             if(!target.isOffline()) {
+                sd.sendMessage(mod + ChatColor.YELLOW + target.getPlayer().getName() + ChatColor.RED + "님에게 경고를 1회 부여했습니다: " + ChatColor.GOLD + saveReason + ChatColor.YELLOW + " (총 " + target.getWarns() + "회)");
                 target.getPlayer().sendMessage(mod + ChatColor.RED + "관리자에게 경고를 받았습니다: " + ChatColor.GOLD + saveReason + ChatColor.YELLOW + " (총 " + target.getWarns() + "회)");
+            } else {
+                sd.sendMessage(mod + ChatColor.YELLOW + target.getOfflinePlayer().getName() + ChatColor.RED + "님에게 경고를 1회 부여했습니다: " + ChatColor.GOLD + saveReason + ChatColor.YELLOW + " (총 " + target.getWarns() + "회)");
             }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            sd.sendMessage(mod + ChatColor.RED + "Check Console: An Exception occured");
+            return true;
         }
     }
 }

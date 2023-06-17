@@ -3,7 +3,6 @@ package io.github.kuroka3.playermanager.Log;
 import io.github.kuroka3.playermanager.PlayerManager;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

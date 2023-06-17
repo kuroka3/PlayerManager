@@ -2,7 +2,6 @@ package io.github.kuroka3.playermanager.Commands;
 
 import io.github.kuroka3.playermanager.Class.ManagedPlayer;
 import io.github.kuroka3.playermanager.PlayerManager;
-import io.github.kuroka3.playermanager.Utils.BanIDManager;
 import io.github.kuroka3.playermanager.Utils.JSONFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,10 +14,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-public class Ban implements CommandExecutor {
+public class Mute implements CommandExecutor {
 
     private static String mod = ChatColor.GRAY + "[" + ChatColor.LIGHT_PURPLE + "!" + ChatColor.GRAY + "] " + ChatColor.RESET;
 
@@ -34,7 +30,7 @@ public class Ban implements CommandExecutor {
                 return true;
             }
 
-            if (!sd.hasPermission("playermanager.ban") && !(sd instanceof ConsoleCommandSender)) {
+            if (!sd.hasPermission("playermanager.mute") && !(sd instanceof ConsoleCommandSender)) {
                 sd.sendMessage(mod + ChatColor.RED + "이 명령어를 사용할 권한이 없습니다");
                 return true;
             }
@@ -57,8 +53,8 @@ public class Ban implements CommandExecutor {
                 target = new ManagedPlayer(player2, playerJson);
             }
 
-            if (target.isBan()) {
-                sd.sendMessage(mod + ChatColor.RED + "해당 유저는 이미 밴 상태입니다");
+            if (target.isMute()) {
+                sd.sendMessage(mod + ChatColor.RED + "해당 유저는 이미 뮤트 상태입니다");
                 return true;
             }
 
@@ -73,17 +69,7 @@ public class Ban implements CommandExecutor {
 
             String reason = sb.toString();
 
-            String id = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddhhmmssSSSSSS"));
-
-            target.ban(reason, id);
-
-            String moder = null;
-
-            if(sd instanceof Player player) {
-                moder = player.getUniqueId().toString();
-            } else if (sd instanceof ConsoleCommandSender) {
-                moder = "Server";
-            }
+            target.mute();
 
             String saveReason;
 
@@ -92,18 +78,13 @@ public class Ban implements CommandExecutor {
             } else {
                 saveReason = reason;
             }
+
             if(!target.isOffline()) {
-                BanIDManager.setBan(id, target.getPlayer().getUniqueId(), moder, saveReason, LocalDateTime.now());
-
-
-                sd.sendMessage(mod + ChatColor.YELLOW + target.getPlayer().getName() + ChatColor.RED + "님을 서버에서 차단했습니다: " + ChatColor.GOLD + saveReason);
+                sd.sendMessage(mod + ChatColor.YELLOW + target.getPlayer().getName() + ChatColor.RED + "님을 뮤트하였습니다: " + ChatColor.GOLD + saveReason);
+                target.getPlayer().sendMessage(mod + ChatColor.RED + "관리자가 당신을 뮤트하였습니다: " + ChatColor.GOLD + saveReason);
             } else {
-                BanIDManager.setBan(id, target.getOfflinePlayer().getUniqueId(), moder, saveReason, LocalDateTime.now());
-
-
-                sd.sendMessage(mod + ChatColor.YELLOW + target.getOfflinePlayer().getName() + ChatColor.RED + "님을 서버에서 차단했습니다: " + ChatColor.GOLD + saveReason);
+                sd.sendMessage(mod + ChatColor.YELLOW + target.getOfflinePlayer().getName() + ChatColor.RED + "님을 뮤트하였습니다: " + ChatColor.GOLD + saveReason);
             }
-
             return true;
         } catch (Exception e) {
             e.printStackTrace();

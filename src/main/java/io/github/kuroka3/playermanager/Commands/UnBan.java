@@ -2,7 +2,6 @@ package io.github.kuroka3.playermanager.Commands;
 
 import io.github.kuroka3.playermanager.Class.ManagedPlayer;
 import io.github.kuroka3.playermanager.PlayerManager;
-import io.github.kuroka3.playermanager.Utils.BanIDManager;
 import io.github.kuroka3.playermanager.Utils.JSONFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,12 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.UUID;
 
 public class UnBan implements CommandExecutor {
 
@@ -25,8 +19,18 @@ public class UnBan implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sd, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         try {
-            if (sd instanceof CommandBlock || args.length == 0) {
-                return false;
+            if (sd instanceof CommandBlock) {
+                return true;
+            }
+
+            if (args.length == 0) {
+                sd.sendMessage(mod + ChatColor.RED + "플레이어를 지정해 주십시오");
+                return true;
+            }
+
+            if (!sd.hasPermission("playermanager.ban") && !(sd instanceof ConsoleCommandSender)) {
+                sd.sendMessage(mod + ChatColor.RED + "이 명령어를 사용할 권한이 없습니다");
+                return true;
             }
 
             JSONFile playerJson = new JSONFile(PlayerManager.getPlugin(PlayerManager.class).getDataFolder() + "/players.json");
@@ -35,7 +39,7 @@ public class UnBan implements CommandExecutor {
 
             if (!target.isBan()) {
                 sd.sendMessage(mod + ChatColor.RED + "해당 유저는 밴이 되어있지 않습니다");
-                return false;
+                return true;
             }
 
             StringBuilder sb = new StringBuilder();
@@ -64,7 +68,8 @@ public class UnBan implements CommandExecutor {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            sd.sendMessage(mod + ChatColor.RED + "Check Console: An Exception occured");
+            return true;
         }
     }
 }

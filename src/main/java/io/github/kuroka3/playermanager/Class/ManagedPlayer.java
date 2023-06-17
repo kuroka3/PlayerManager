@@ -8,21 +8,21 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.*;
 
 public class ManagedPlayer {
     private Player p;
     private OfflinePlayer op;
-    private JSONFile jsonFile;
+    private final JSONFile jsonFile;
     private int warns;
     private boolean ban;
     private String banid;
     private String banre;
-    private JSONParser parser = new JSONParser();
-    private JSONObject jobj;
-    private boolean isOffline;
+    private boolean mute;
+    private final JSONParser parser = new JSONParser();
+    private final JSONObject jobj;
+    private final boolean isOffline;
 
     public ManagedPlayer(Player player, JSONFile jsonfile) throws IOException {
 
@@ -36,6 +36,7 @@ public class ManagedPlayer {
         ban = (boolean) jobj.get("ban");
         banid = (String) jobj.get("banid");
         banre = (String) jobj.get("banre");
+        mute = (boolean) jobj.get("mute");
         isOffline = false;
     }
 
@@ -51,6 +52,7 @@ public class ManagedPlayer {
         ban = (boolean) jobj.get("ban");
         banid = (String) jobj.get("banid");
         banre = (String) jobj.get("banre");
+        mute = (boolean) jobj.get("mute");
         isOffline = true;
     }
 
@@ -127,6 +129,30 @@ public class ManagedPlayer {
 
     public boolean isOffline() {
         return isOffline;
+    }
+
+    public boolean isMute() {
+        return mute;
+    }
+
+    public void mute() throws IOException {
+        if(isMute()) {
+            return;
+        }
+
+        mute = true;
+        jobj.put("mute", mute);
+        save();
+    }
+
+    public void unmute() throws IOException {
+        if(!isMute()) {
+            return;
+        }
+
+        mute = false;
+        jobj.put("mute", mute);
+        save();
     }
 
     public void save() throws IOException {

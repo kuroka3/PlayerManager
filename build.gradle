@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'io.github.kuroka3'
-version = '1.0'
+version = '0.0.2'
 
 repositories {
     mavenCentral()
@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly "io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT"
+    compileOnly "io.papermc.paper:paper-api:1.20-R0.1-SNAPSHOT"
     implementation "com.googlecode.json-simple:json-simple:1.1.1"
 }
 
