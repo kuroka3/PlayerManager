@@ -14,6 +14,7 @@ PlayerManager is a plugin to moderate players in server
  - 더 이상 GSON 라이브러리를 사용하지 않습니다. 
  - 이제 json-simple 라이브러리를 사용합니다.
  - 실시간으로 파일이 저장됩니다.
+ - 코드가 최적화 되었습니다.
 
 ## 구현 예정 기능: 정식버전까지 모든기능 구현이 목표
  - 유저 밴/경고/뮤트/킥 | 언밴/언경고(경고취소)/언뮤트 🟨
