@@ -20,7 +20,7 @@ PlayerManager is a plugin to moderate players in server
 
 ## 구현 예정 기능: 정식버전까지 모든기능 구현이 목표
  - 유저 밴/경고/뮤트/킥 | 언밴/언경고(경고취소)/언뮤트 🟨
- - 권한 🟥
+ - 권한 🟩
  - 관리 로그 🟨
  - 밴id 🟨
  - Case 시스템 🟥
@@ -47,7 +47,7 @@ uses own system.
 
 ## Features: I'll make these features until release.
  - User ban/warn/mute/kick | unban(pardon)/unwarn/unmute 🟨
- - Permissions 🟥
+ - Permissions 🟩
  - Moderation log 🟨
  - Ban ID 🟨
  - Case System 🟥
