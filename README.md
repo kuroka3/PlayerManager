@@ -10,7 +10,7 @@ PlayerManager is a plugin to moderate players in server
 
 ※ 이 플러그인에는 권한 시스템이 있습니다. 권한 관리를 위해 Luckperms등 다른 플러그인을 사용해 주십시오.
 
-## v1과 다른 점
+## PlayerManager-old와 다른 점
  - 더 이상 GSON 라이브러리를 사용하지 않습니다. 
  - 이제 json-simple 라이브러리를 사용합니다.
  - 실시간으로 파일이 저장됩니다.
@@ -34,7 +34,7 @@ uses own system.
 
 ※ This plugin has permission system. Use luckperms(or etc.) to give/take permission.
 
-## Difference from v1
+## Difference from PlayerManager-old
  - No longer use GSON library.
  - Now use json-simple library.
  - JSON File is saved in real time.
