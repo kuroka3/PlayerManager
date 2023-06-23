@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.*;
+import java.time.LocalDateTime;
 
 public class ManagedPlayer {
     private Player p;
@@ -20,7 +21,8 @@ public class ManagedPlayer {
     private String banid;
     private String banre;
     private boolean mute;
-    private final JSONParser parser = new JSONParser();
+    private boolean temp;
+    private String tounban;
     private final JSONObject jobj;
     private final boolean isOffline;
 
@@ -37,6 +39,8 @@ public class ManagedPlayer {
         banid = (String) jobj.get("banid");
         banre = (String) jobj.get("banre");
         mute = (boolean) jobj.get("mute");
+        temp = (boolean) jobj.get("temp");
+        tounban = (String) jobj.get("tounban");
         isOffline = false;
     }
 
@@ -103,7 +107,11 @@ public class ManagedPlayer {
             return;
         }
         ban = false;
+        temp = false;
+        tounban = "-1";
         jobj.put("ban", ban);
+        jobj.put("temp", temp);
+        jobj.put("tounban", tounban);
         save();
     }
 
@@ -153,6 +161,46 @@ public class ManagedPlayer {
         mute = false;
         jobj.put("mute", mute);
         save();
+    }
+
+    public boolean isTemp() {
+        return temp;
+    }
+
+    public boolean isTounabn(LocalDateTime now) {
+        if(tounban.equals("-1")) return false;
+        else return now.isAfter(LocalDateTime.parse(tounban));
+    }
+
+    public void tempban(String re, String id, LocalDateTime toban) throws IOException {
+        if (re.isEmpty()) {
+            re = "No Reason Given";
+        }
+
+        ban = true;
+        temp = true;
+
+        tounban = toban.toString();
+        banre = re;
+        banid = id;
+        jobj.put("ban", ban);
+        jobj.put("banre", banre);
+        jobj.put("banid", banid);
+        jobj.put("temp", temp);
+        jobj.put("tounban", tounban);
+        save();
+
+        if(!isOffline) {
+            p.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "당신은 이 서버에서 차단되었습니다", ChatColor.GOLD + banre, 20, 100, 0);
+            Bukkit.getScheduler().runTaskLater(PlayerManager.getPlugin(PlayerManager.class), () -> {
+                p.kickPlayer(ChatColor.RED + "당신은 이 서버에서 차단되었습니다\n\n" + ChatColor.GRAY + "Reason: " + ChatColor.WHITE + banre + ChatColor.GRAY + "\n\nBan ID: " + ChatColor.WHITE + banid);
+            }, 100L);
+        }
+    }
+
+    public LocalDateTime getTounban() {
+        if(tounban.equals("-1")) return null;
+        else return LocalDateTime.parse(tounban);
     }
 
     public void save() throws IOException {
