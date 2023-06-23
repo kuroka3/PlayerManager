@@ -23,7 +23,6 @@ PlayerManager is a plugin to moderate players in server
  - 밴id 🟨
  - Case 시스템 🟥
  - 시간제 밴 🟥
- - 90일 이후 경고 자동제거 🟥
  - 언어 설정 🟥
 
 # 영어 / English
@@ -48,5 +47,4 @@ uses own system.
  - Ban ID 🟨
  - Case System 🟥
  - Period ban 🟥
- - Automatic unwarn after 90d 🟥
  - Support two or more Language 🟥
