@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Ban implements CommandExecutor {
+public class TempBan implements CommandExecutor {
 
     private static String mod = ChatColor.GRAY + "[" + ChatColor.LIGHT_PURPLE + "!" + ChatColor.GRAY + "] " + ChatColor.RESET;
 
@@ -32,6 +32,11 @@ public class Ban implements CommandExecutor {
 
             if (args.length == 0) {
                 sd.sendMessage(mod + ChatColor.RED + "플레이어를 지정해 주십시오");
+                return true;
+            }
+
+            if (args.length < 3 || !(args[2].equalsIgnoreCase("seconds") || args[2].equalsIgnoreCase("minutes") || args[2].equalsIgnoreCase("hours") || args[2].equalsIgnoreCase("days") || args[2].equalsIgnoreCase("months") || args[2].equalsIgnoreCase("years"))) {
+                sd.sendMessage(mod + ChatColor.RED + "사용법이 알맞지 않습니다");
                 return true;
             }
 
@@ -65,7 +70,7 @@ public class Ban implements CommandExecutor {
 
             StringBuilder sb = new StringBuilder();
 
-            for (int i = 1; i < args.length; i++) {
+            for (int i = 3; i < args.length; i++) {
                 sb.append(args[i]);
                 if (i != args.length - 1) {
                     sb.append(" ");
@@ -82,7 +87,16 @@ public class Ban implements CommandExecutor {
                     )*5
             );
 
-            target.ban(reason, id);
+            LocalDateTime toban = LocalDateTime.now();
+
+            if(args[2].equalsIgnoreCase("seconds")) toban = toban.plusSeconds(Long.parseLong(args[1]));
+            if(args[2].equalsIgnoreCase("minutes")) toban = toban.plusMinutes(Long.parseLong(args[1]));
+            if(args[2].equalsIgnoreCase("hours")) toban = toban.plusHours(Long.parseLong(args[1]));
+            if(args[2].equalsIgnoreCase("days")) toban = toban.plusDays(Long.parseLong(args[1]));
+            if(args[2].equalsIgnoreCase("months")) toban = toban.plusMonths(Long.parseLong(args[1]));
+            if(args[2].equalsIgnoreCase("years")) toban = toban.plusYears(Long.parseLong(args[1]));
+
+            target.tempban(reason, id, toban);
 
             String moder = null;
 
@@ -99,15 +113,17 @@ public class Ban implements CommandExecutor {
             } else {
                 saveReason = reason;
             }
+
             if(!target.isOffline()) {
                 BanIDManager.setBan(id, target.getPlayer().getUniqueId(), moder, saveReason, LocalDateTime.now());
-                CaseManager.addCase(1, moder, target.getPlayer().getUniqueId(), saveReason, null);
+                CaseManager.addCase(4, moder, target.getPlayer().getUniqueId(), saveReason, args[1] + args[2]);
 
 
                 sd.sendMessage(mod + ChatColor.YELLOW + target.getPlayer().getName() + ChatColor.RED + "님을 서버에서 차단했습니다: " + ChatColor.GOLD + saveReason);
             } else {
                 BanIDManager.setBan(id, target.getOfflinePlayer().getUniqueId(), moder, saveReason, LocalDateTime.now());
-                CaseManager.addCase(1, moder, target.getPlayer().getUniqueId(), saveReason, null);
+                CaseManager.addCase(4, moder, target.getOfflinePlayer().getUniqueId(), saveReason, args[1] + args[2]);
+
 
                 sd.sendMessage(mod + ChatColor.YELLOW + target.getOfflinePlayer().getName() + ChatColor.RED + "님을 서버에서 차단했습니다: " + ChatColor.GOLD + saveReason);
             }

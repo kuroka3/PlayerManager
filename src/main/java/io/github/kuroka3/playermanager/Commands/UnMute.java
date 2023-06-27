@@ -2,6 +2,7 @@ package io.github.kuroka3.playermanager.Commands;
 
 import io.github.kuroka3.playermanager.Class.ManagedPlayer;
 import io.github.kuroka3.playermanager.PlayerManager;
+import io.github.kuroka3.playermanager.Utils.CaseManager;
 import io.github.kuroka3.playermanager.Utils.JSONFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -79,11 +80,21 @@ public class UnMute implements CommandExecutor {
                 saveReason = reason;
             }
 
+            String moder = null;
+
+            if(sd instanceof Player player) {
+                moder = player.getUniqueId().toString();
+            } else if (sd instanceof ConsoleCommandSender) {
+                moder = "Server";
+            }
+
             if(!target.isOffline()) {
                 sd.sendMessage(mod + ChatColor.YELLOW + target.getPlayer().getName() + ChatColor.RED + "님의 뮤트를 해제하였습니다: " + ChatColor.GOLD + saveReason);
                 target.getPlayer().sendMessage(mod + ChatColor.RED + "관리자가 당신의 뮤트를 해제하였습니다: " + ChatColor.GOLD + saveReason);
+                CaseManager.addCase(6, moder, target.getPlayer().getUniqueId(), reason, null);
             } else {
                 sd.sendMessage(mod + ChatColor.YELLOW + target.getOfflinePlayer().getName() + ChatColor.RED + "님의 뮤트를 해제하였습니다: " + ChatColor.GOLD + saveReason);
+                CaseManager.addCase(6, moder, target.getOfflinePlayer().getUniqueId(), reason, null);
             }
             return true;
         } catch (Exception e) {

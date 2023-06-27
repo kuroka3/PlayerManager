@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LogFile extends File {
     private StringBuilder log;
@@ -20,7 +21,7 @@ public class LogFile extends File {
      * @param now 현재 시간
      */
     public void addLog(String msg, LocalDateTime now) {
-        log.append("[" + now.toString() + "] " + msg + "\n");
+        log.append("[" + now.format(DateTimeFormatter.ofPattern("hh:mm:ss")) + "] " + msg + "\n");
     }
 
     /**StringBuilder를 기반으로 로그파일 저장*/

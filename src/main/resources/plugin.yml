@@ -19,6 +19,15 @@ commands:
   managerunmute:
     description: Unmute player with this plugin
     usage: /managerunmute [Player] [Reason]
+  banid:
+    description: Get info of BanID
+    usage: /banid [BanID]
+  tempban:
+    description: Ban player
+    usage: /tempban [Player] [Integer] [Type] [Reason]
+  case:
+    description: Search Case
+    usage: /case [case]
 
 permissions:
   playermanager.ban:
