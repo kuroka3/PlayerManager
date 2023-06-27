@@ -12,8 +12,6 @@ import java.util.UUID;
 
 public class BanIDManager {
 
-    private static final JSONParser parser = new JSONParser();
-
     public static void setBan(String id, UUID target, String moder, String reason, LocalDateTime time) {
 
         JSONFile file = new JSONFile(PlayerManager.getPlugin(PlayerManager.class).getDataFolder() + "/banid.json");

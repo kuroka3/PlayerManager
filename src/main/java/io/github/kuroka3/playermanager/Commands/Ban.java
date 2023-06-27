@@ -3,6 +3,7 @@ package io.github.kuroka3.playermanager.Commands;
 import io.github.kuroka3.playermanager.Class.ManagedPlayer;
 import io.github.kuroka3.playermanager.PlayerManager;
 import io.github.kuroka3.playermanager.Utils.BanIDManager;
+import io.github.kuroka3.playermanager.Utils.CaseManager;
 import io.github.kuroka3.playermanager.Utils.JSONFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -100,12 +101,13 @@ public class Ban implements CommandExecutor {
             }
             if(!target.isOffline()) {
                 BanIDManager.setBan(id, target.getPlayer().getUniqueId(), moder, saveReason, LocalDateTime.now());
+                CaseManager.addCase(1, moder, target.getPlayer().getUniqueId(), saveReason, null);
 
 
                 sd.sendMessage(mod + ChatColor.YELLOW + target.getPlayer().getName() + ChatColor.RED + "님을 서버에서 차단했습니다: " + ChatColor.GOLD + saveReason);
             } else {
                 BanIDManager.setBan(id, target.getOfflinePlayer().getUniqueId(), moder, saveReason, LocalDateTime.now());
-
+                CaseManager.addCase(1, moder, target.getPlayer().getUniqueId(), saveReason, null);
 
                 sd.sendMessage(mod + ChatColor.YELLOW + target.getOfflinePlayer().getName() + ChatColor.RED + "님을 서버에서 차단했습니다: " + ChatColor.GOLD + saveReason);
             }

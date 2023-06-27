@@ -1,5 +1,6 @@
 package io.github.kuroka3.playermanager.Utils;
 
+import com.google.gson.JsonArray;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.simple.JSONObject;
@@ -49,7 +50,7 @@ public class JSONFile extends File {
             jobj = obj;
         }
 
-        writer.write(jobj.toJSONString());
+        writer.write(obj.toJSONString());
         writer.flush();
         writer.close();
     }

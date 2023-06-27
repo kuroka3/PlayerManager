@@ -2,6 +2,7 @@ package io.github.kuroka3.playermanager.Commands;
 
 import io.github.kuroka3.playermanager.Class.ManagedPlayer;
 import io.github.kuroka3.playermanager.PlayerManager;
+import io.github.kuroka3.playermanager.Utils.CaseManager;
 import io.github.kuroka3.playermanager.Utils.JSONFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,6 +11,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class UnBan implements CommandExecutor {
@@ -61,7 +63,17 @@ public class UnBan implements CommandExecutor {
                 saveReason = reason;
             }
 
+            String moder = null;
+
+            if(sd instanceof Player player) {
+                moder = player.getUniqueId().toString();
+            } else if (sd instanceof ConsoleCommandSender) {
+                moder = "Server";
+            }
+
             target.unban();
+
+            CaseManager.addCase(5, moder, target.getOfflinePlayer().getUniqueId(), reason, null);
 
             sd.sendMessage(mod + ChatColor.YELLOW + target.getOfflinePlayer().getName() + ChatColor.GREEN + "님의 차단을 해제하였습니다: " + ChatColor.GOLD + saveReason);
 

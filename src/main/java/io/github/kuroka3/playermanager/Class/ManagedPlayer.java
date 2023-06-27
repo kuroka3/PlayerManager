@@ -7,7 +7,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.io.*;
 import java.time.LocalDateTime;

@@ -2,6 +2,7 @@ package io.github.kuroka3.playermanager.Commands;
 
 import io.github.kuroka3.playermanager.Class.ManagedPlayer;
 import io.github.kuroka3.playermanager.PlayerManager;
+import io.github.kuroka3.playermanager.Utils.CaseManager;
 import io.github.kuroka3.playermanager.Utils.JSONFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -63,6 +64,14 @@ public class Warn implements CommandExecutor {
                 }
             }
 
+            String moder = null;
+
+            if(sd instanceof Player player) {
+                moder = player.getUniqueId().toString();
+            } else if (sd instanceof ConsoleCommandSender) {
+                moder = "Server";
+            }
+
             String reason = sb.toString();
 
             target.warn();
@@ -78,8 +87,10 @@ public class Warn implements CommandExecutor {
             if(!target.isOffline()) {
                 sd.sendMessage(mod + ChatColor.YELLOW + target.getPlayer().getName() + ChatColor.RED + "님에게 경고를 1회 부여했습니다: " + ChatColor.GOLD + saveReason + ChatColor.YELLOW + " (총 " + target.getWarns() + "회)");
                 target.getPlayer().sendMessage(mod + ChatColor.RED + "관리자에게 경고를 받았습니다: " + ChatColor.GOLD + saveReason + ChatColor.YELLOW + " (총 " + target.getWarns() + "회)");
+                CaseManager.addCase(2, moder, target.getPlayer().getUniqueId(), reason, null);
             } else {
                 sd.sendMessage(mod + ChatColor.YELLOW + target.getOfflinePlayer().getName() + ChatColor.RED + "님에게 경고를 1회 부여했습니다: " + ChatColor.GOLD + saveReason + ChatColor.YELLOW + " (총 " + target.getWarns() + "회)");
+                CaseManager.addCase(2, moder, target.getOfflinePlayer().getUniqueId(), reason, null);
             }
             return true;
         } catch (Exception e) {

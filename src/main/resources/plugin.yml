@@ -25,6 +25,9 @@ commands:
   tempban:
     description: Ban player
     usage: /tempban [Player] [Integer] [Type] [Reason]
+  case:
+    description: Search Case
+    usage: /case [case]
 
 permissions:
   playermanager.ban:

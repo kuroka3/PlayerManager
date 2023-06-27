@@ -28,6 +28,7 @@ public final class PlayerManager extends JavaPlugin implements Listener {
         this.getCommand("managerunmute").setExecutor(new UnMute());
         this.getCommand("banid").setExecutor(new BanID());
         this.getCommand("tempban").setExecutor(new TempBan());
+        this.getCommand("case").setExecutor(new Case());
 
         this.getServer().getPluginManager().registerEvents(new ChatEvent(), this);
         this.getServer().getPluginManager().registerEvents(new ConnectEvent(), this);
@@ -43,10 +44,5 @@ public final class PlayerManager extends JavaPlugin implements Listener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
     }
 }
