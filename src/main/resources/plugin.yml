@@ -1,41 +1,13 @@
-name: PlayerManager
+name: 'PlayerManagerKotlin'
 version: '${version}'
-main: io.github.kuroka3.playermanager.PlayerManager
-api-version: '1.20'
-
-commands:
-  managerban:
-    description: Ban player with this plugin
-    usage: /managerban [Player] [Reason]
-  managerwarn:
-    description: Warn player with this plugin
-    usage: /managerwarn [Player] [Reason]
-  managerunban:
-    description: Unban player with this plugin
-    usage: /managerunban [Player] [Reason]
-  managermute:
-    description: Mute player with this plugin
-    usage: /managermute [Player] [Reason]
-  managerunmute:
-    description: Unmute player with this plugin
-    usage: /managerunmute [Player] [Reason]
-  banid:
-    description: Get info of BanID
-    usage: /banid [BanID]
-  tempban:
-    description: Ban player
-    usage: /tempban [Player] [Integer] [Type] [Reason]
-  case:
-    description: Search Case
-    usage: /case [case]
+main: 'io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin'
+api-version: '${paperVersion}'
+libraries:
+  - org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}
+  - org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}
+  - io.github.monun:kommand-core:3.1.6
+  - io.github.monun:tap-core:4.9.3
 
 permissions:
   playermanager.ban:
-    default: false
-    description: need for ban/unban player
-  playermanager.warn:
-    default: false
-    description: need for warn/unwarn player
-  playermanager.mute:
-    default: false
-    description: need for mute/unmute player
+    description: asdf
