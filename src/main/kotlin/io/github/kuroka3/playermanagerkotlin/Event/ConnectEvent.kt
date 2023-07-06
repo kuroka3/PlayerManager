@@ -25,7 +25,7 @@ class ConnectEvent : Listener {
 
             val tempobj: JSONObject = playerJson.jSONObject!!
 
-            val userObject: JSONObject? = tempobj[e.player.uniqueId] as JSONObject?
+            val userObject: JSONObject? = tempobj[e.player.uniqueId.toString()] as JSONObject?
 
             if(userObject == null) {
                 val `object` = JSONObject()
@@ -56,7 +56,7 @@ class ConnectEvent : Listener {
             if(p.ban) {
                 if(p.temp) {
                     if(p.isToUnban(LocalDateTime.now())) {
-                        p.unban()
+                        p.unban(true)
                     } else {
                         e.disallow(PlayerLoginEvent.Result.KICK_BANNED,
                             text("당신은 이 서버에서 차단되었습니다\n\n${p.getNokori(LocalDateTime.now(), "d일 h시간 m분 s초 남음")}\n\n").color(TextColor.color(0x00ff5555)).append(
@@ -76,6 +76,7 @@ class ConnectEvent : Listener {
             }
         } catch (ex: Exception) {
             ex.printStackTrace()
+            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, text("서버 연결 중 PlayerManager 플러그인에서 문제가 발생하였습니다\n\n서버 관리자에게 문의해 주십시오").color(TextColor.color(0x00ff55555)))
         }
     }
 }

@@ -68,8 +68,15 @@ class ManagedPlayer(pP: OfflinePlayer, jsonFileP: JSONFile) {
         save()
     }
 
-    fun unban() {
+    fun unban(isTemp: Boolean = false) {
         if (!ban) throw IllegalAccessException("Targeted player is not banned")
+
+        if(isTemp) {
+            temp = false
+            tounban = "-1"
+            jobj["temp"] = temp
+            jobj["tounban"] = tounban
+        }
 
         ban = false
         jobj["ban"] = ban
@@ -120,7 +127,7 @@ class ManagedPlayer(pP: OfflinePlayer, jsonFileP: JSONFile) {
         var a: String = format
 
         if (tounban == "-1") {
-            a = a.replace("d", "d")
+            a = a.replace("d", "0")
             a = a.replace("h", "0")
             a = a.replace("m", "0")
             a = a.replace("s", "0")
@@ -129,17 +136,17 @@ class ManagedPlayer(pP: OfflinePlayer, jsonFileP: JSONFile) {
         } else {
             val tounbanLocalDateTime: LocalDateTime = LocalDateTime.parse(tounban)
 
-            val array: Array<Int> = emptyArray()
+            val array: Array<Int> = arrayOf(
+                ChronoUnit.DAYS.between(now, tounbanLocalDateTime).toInt(),
+                ChronoUnit.HOURS.between(now, tounbanLocalDateTime).toInt()%24,
+                ChronoUnit.MINUTES.between(now, tounbanLocalDateTime).toInt()%60,
+                ChronoUnit.SECONDS.between(now, tounbanLocalDateTime).toInt()%60
+            )
 
-            array.plus(ChronoUnit.DAYS.between(now, tounbanLocalDateTime).toInt())
-            array.plus(ChronoUnit.HOURS.between(now, tounbanLocalDateTime).toInt()%24)
-            array.plus(ChronoUnit.MINUTES.between(now, tounbanLocalDateTime).toInt()%60)
-            array.plus(ChronoUnit.SECONDS.between(now, tounbanLocalDateTime).toInt()%60)
-
-            a = a.replace("d", "d")
-            a = a.replace("h", "0")
-            a = a.replace("m", "0")
-            a = a.replace("s", "0")
+            a = a.replace("d", array[0].toString())
+            a = a.replace("h", array[1].toString())
+            a = a.replace("m", array[2].toString())
+            a = a.replace("s", array[3].toString())
 
             return a
         }

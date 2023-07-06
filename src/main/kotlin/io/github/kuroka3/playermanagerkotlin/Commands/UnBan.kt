@@ -10,13 +10,9 @@ import io.github.monun.kommand.kommand
 import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.TextColor.color
-import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
-import org.bukkit.entity.Player
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
-object Ban {
+object UnBan {
     fun registerKommand() {
 
         val PlayerManagerKotlin = PlayerManagerKotlin.instance
@@ -28,7 +24,7 @@ object Ban {
         )
 
         PlayerManagerKotlin.kommand {
-            register("kotlinban") {
+            register("kotlinunban") {
                 requires { (isPlayer && hasPermission("playermanager.ban")) || isConsole }
 
                 val onlinePlayer = KommandArgument.string().apply {
@@ -56,9 +52,6 @@ object Ban {
                             try {
                                 val target: String by it
                                 val reason: String by it
-                                val id: String =
-                                    (LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddhhmmssSS"))
-                                        .toLong() * 5).toString()
 
                                 val targetPlayer = Bukkit.getOfflinePlayer(target)
 
@@ -69,49 +62,13 @@ object Ban {
                                     JSONFile("${PlayerManagerKotlin.dataFolder}/players.json")
                                 )
 
-                                managedPlayer.ban(reason, id)
-
-                                if (managedPlayer.p.isOnline) {
-                                    val onp: Player = Bukkit.getPlayer(managedPlayer.p.uniqueId)!!
-
-                                    onp.showTitle(
-                                        Title.title(
-                                            text("당신은 이 서버에서 차단되었습니다")
-                                                .color(color(0x00ff5555)),
-                                            text(managedPlayer.banre)
-                                                .color(color(0x00ffaa00))
-                                        )
-                                    )
-
-                                    val kick: () -> Unit = {
-                                        onp.kick(
-                                            text("당신은 이 서버에서 차단되었습니다\n\n")
-                                                .color(color(0x00ff5555)).append(
-                                                    text("Reason: ").color(color(0x00aaaaaa))
-                                                ).append(
-                                                    text(managedPlayer.banre)
-                                                        .color(color(0x00ffffff))
-                                                ).append(
-                                                    text("\n\nBan ID: ").color(color(0x00aaaaaa))
-                                                ).append(
-                                                    text(managedPlayer.banid)
-                                                        .color(color(0x00ffffff))
-                                                )
-                                        )
-                                    }
-
-                                    Bukkit.getScheduler().runTaskLater(
-                                        io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin.instance,
-                                        kick,
-                                        100L
-                                    )
-                                }
+                                managedPlayer.unban(managedPlayer.temp)
 
                                 sender.sendMessage(
                                     mod.append(
                                         text("${managedPlayer.p.name}").color(color(0x00ffff55))
                                     ).append(
-                                        text("님을 서버에서 차단했습니다: ").color(color(0x00ff5555))
+                                        text("님의 차단을 해제했습니다: ").color(color(0x0055ff55))
                                     ).append(
                                         text(reason).color(color(0x00ffaa00))
                                     )

@@ -1,7 +1,8 @@
 package io.github.kuroka3.playermanagerkotlin
 
 import io.github.kuroka3.PlayerManagerKotlinkotlin.Event.ConnectEvent
-import io.github.kuroka3.playermanagerkotlin.Commands.Ban
+import io.github.kuroka3.playermanagerkotlin.Commands.*
+import io.github.kuroka3.playermanagerkotlin.Event.MutedChatEvent
 import org.bukkit.plugin.java.JavaPlugin
 
 class PlayerManagerKotlin : JavaPlugin() {
@@ -22,7 +23,12 @@ class PlayerManagerKotlin : JavaPlugin() {
         }
 
         server.pluginManager.registerEvents(ConnectEvent(), this)
+        server.pluginManager.registerEvents(MutedChatEvent(), this)
 
-        Ban.registerCommand()
+        Ban.registerKommand()
+        Mute.registerKommand()
+        TempBan.registerKommand()
+        Warn.registerKommand()
+        UnBan.registerKommand()
     }
 }

@@ -11,3 +11,7 @@ libraries:
 permissions:
   playermanager.ban:
     description: asdf
+  playermanager.warn:
+    description: asdf
+  playermanager.mute:
+    description: asdf
