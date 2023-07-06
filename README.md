@@ -22,7 +22,7 @@ PlayerManager is a plugin to moderate players in server
  - 관리 로그 🟥
  - 밴id 🟥
  - Case 시스템 🟥
- - 시간제 밴 🟥
+ - 시간제 밴 🟩
  - 언어 설정 🟥
 
 # 영어 / English
@@ -46,5 +46,5 @@ uses own system.
  - Moderation log 🟥
  - Ban ID 🟥
  - Case System 🟥
- - Period ban 🟥
+ - Period ban 🟩
  - Support two or more Language 🟥
