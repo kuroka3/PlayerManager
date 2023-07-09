@@ -1,8 +1,7 @@
 package io.github.kuroka3.playermanagerkotlin.Commands
 
 import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
-import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
-import io.github.kuroka3.playermanagerkotlin.Utils.JSONFile
+import io.github.kuroka3.playermanagerkotlin.PlayerManager
 import io.github.monun.kommand.KommandArgument
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
@@ -11,13 +10,12 @@ import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.TextColor.color
 import org.bukkit.Bukkit
-import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 
 object UnMute {
     fun registerKommand() {
 
-        val PlayerManagerKotlin = PlayerManagerKotlin.instance
+        val PlayerManager = PlayerManager.instance
 
         val mod: TextComponent = text("[").color(color(0x00aaaaaa)).append(
             text("!").color(color(0x00ff55ff))
@@ -25,7 +23,7 @@ object UnMute {
             text("] ").color(color(0x00aaaaaa))
         )
 
-        PlayerManagerKotlin.kommand {
+        PlayerManager.kommand {
             register("unmute") {
                 requires { (isPlayer && hasPermission("playermanager.mute")) || isConsole }
 
@@ -61,7 +59,7 @@ object UnMute {
 
                                 val managedPlayer: ManagedPlayer = ManagedPlayer(
                                     Bukkit.getOfflinePlayer(target),
-                                    PlayerManagerKotlin.playerJSONFile
+                                    PlayerManager.playerJSONFile
                                 )
 
                                 managedPlayer.unmute()

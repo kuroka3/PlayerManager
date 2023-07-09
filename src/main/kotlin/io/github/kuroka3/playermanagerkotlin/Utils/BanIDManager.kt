@@ -1,6 +1,6 @@
 package io.github.kuroka3.playermanagerkotlin.Utils
 
-import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
+import io.github.kuroka3.playermanagerkotlin.PlayerManager
 import org.json.simple.JSONObject
 import java.io.IOException
 import java.time.LocalDateTime
@@ -10,7 +10,7 @@ object BanIDManager {
     lateinit var banidJSONFile: JSONFile
 
     fun setInit() {
-        banidJSONFile = JSONFile("${PlayerManagerKotlin.instance.dataFolder}/data/banid.json")
+        banidJSONFile = JSONFile("${PlayerManager.instance.dataFolder}/data/banid.json")
     }
     
     fun setBan(id: String?, target: UUID, moder: String?, reason: String?, time: LocalDateTime, istemp: Boolean?) {
@@ -49,7 +49,7 @@ object BanIDManager {
         return try {
             if (!jsonFile.isFile) {
                 if (!jsonFile.createNewFile()) {
-                    PlayerManagerKotlin.instance.dataFolder.mkdir()
+                    PlayerManager.instance.dataFolder.mkdir()
                     jsonFile.createNewFile()
                 }
                 return JSONObject()

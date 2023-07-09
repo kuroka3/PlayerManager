@@ -1,9 +1,8 @@
 package io.github.kuroka3.playermanagerkotlin.Commands
 
 import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
-import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
+import io.github.kuroka3.playermanagerkotlin.PlayerManager
 import io.github.kuroka3.playermanagerkotlin.Utils.BanIDManager
-import io.github.kuroka3.playermanagerkotlin.Utils.JSONFile
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
 import io.github.monun.kommand.kommand
@@ -20,7 +19,7 @@ import java.time.format.DateTimeFormatter
 object TempBan {
     fun registerKommand() {
 
-        val PlayerManagerKotlin = PlayerManagerKotlin.instance
+        val PlayerManager = PlayerManager.instance
 
         val mod: TextComponent = text("[").color(color(0x00aaaaaa)).append(
             text("!").color(color(0x00ff55ff))
@@ -28,7 +27,7 @@ object TempBan {
             text("] ").color(color(0x00aaaaaa))
         )
 
-        PlayerManagerKotlin.kommand {
+        PlayerManager.kommand {
             register("tempban") {
                 requires { (isPlayer && hasPermission("playermanager.ban")) || isConsole }
 
@@ -101,7 +100,7 @@ object TempBan {
 
                                         val managedPlayer = ManagedPlayer(
                                             Bukkit.getOfflinePlayer(target),
-                                            PlayerManagerKotlin.playerJSONFile
+                                            PlayerManager.playerJSONFile
                                         )
 
                                         var toban = LocalDateTime.now()
@@ -138,7 +137,7 @@ object TempBan {
                                             }
 
                                             Bukkit.getScheduler().runTaskLater(
-                                                io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin.instance,
+                                                io.github.kuroka3.playermanagerkotlin.PlayerManager.instance,
                                                 kick,
                                                 100L
                                             )

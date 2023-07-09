@@ -1,8 +1,7 @@
 package io.github.kuroka3.PlayerManagerKotlinkotlin.Event
 
 import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
-import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
-import io.github.kuroka3.playermanagerkotlin.Utils.JSONFile
+import io.github.kuroka3.playermanagerkotlin.PlayerManager
 import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.OfflinePlayer
@@ -20,7 +19,7 @@ class ConnectEvent : Listener {
                 return
             }
 
-            val playerJson = PlayerManagerKotlin.instance.playerJSONFile
+            val playerJson = PlayerManager.instance.playerJSONFile
 
             if(!playerJson.isFile || playerJson.isEmpty) {
                 playerJson.createNewFile()
@@ -55,7 +54,7 @@ class ConnectEvent : Listener {
         }
 
         try {
-            val p: ManagedPlayer = ManagedPlayer(e.player as OfflinePlayer, PlayerManagerKotlin.instance.playerJSONFile)
+            val p: ManagedPlayer = ManagedPlayer(e.player as OfflinePlayer, PlayerManager.instance.playerJSONFile)
 
             if(p.ban) {
                 if(p.temp) {

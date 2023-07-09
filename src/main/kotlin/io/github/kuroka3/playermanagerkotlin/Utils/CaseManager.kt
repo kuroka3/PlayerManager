@@ -1,6 +1,6 @@
 package io.github.kuroka3.playermanagerkotlin.Utils
 
-import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
+import io.github.kuroka3.playermanagerkotlin.PlayerManager
 import org.json.simple.JSONArray
 import org.json.simple.JSONObject
 import java.util.*
@@ -11,7 +11,7 @@ object CaseManager {
      */
     fun addCase(type: Int, moder: String, target: UUID, reason: String?, tempBan: String?) {
         try {
-            val file = JSONFile(PlayerManagerKotlin.instance.dataFolder.toString() + "/Case.json")
+            val file = JSONFile(PlayerManager.instance.dataFolder.toString() + "/Case.json")
             if (!file.isFile) {
                 file.createNewFile()
             }
@@ -41,7 +41,7 @@ object CaseManager {
 
     fun getCase(caseInt: Int): JSONObject? {
         return try {
-            val file = JSONFile(PlayerManagerKotlin.instance.dataFolder.toString() + "/Case.json")
+            val file = JSONFile(PlayerManager.instance.dataFolder.toString() + "/Case.json")
             (file.jsonObject!!["case"] as JSONArray)[caseInt - 1] as JSONObject?
         } catch (e: Exception) {
             null
