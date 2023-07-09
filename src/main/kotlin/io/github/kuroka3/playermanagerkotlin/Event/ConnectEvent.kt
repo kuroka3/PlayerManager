@@ -16,14 +16,18 @@ class ConnectEvent : Listener {
     @EventHandler
     fun onConnect(e: PlayerLoginEvent) {
         try {
-            val playerJson: JSONFile = JSONFile("${PlayerManagerKotlin.instance.dataFolder}/players.json")
+            if (e.result != PlayerLoginEvent.Result.ALLOWED) {
+                return
+            }
+
+            val playerJson = PlayerManagerKotlin.instance.playerJSONFile
 
             if(!playerJson.isFile || playerJson.isEmpty) {
                 playerJson.createNewFile()
                 playerJson.saveJSONFile(JSONObject())
             }
 
-            val tempobj: JSONObject = playerJson.jSONObject!!
+            val tempobj: JSONObject = playerJson.jsonObject!!
 
             val userObject: JSONObject? = tempobj[e.player.uniqueId.toString()] as JSONObject?
 
@@ -51,7 +55,7 @@ class ConnectEvent : Listener {
         }
 
         try {
-            val p: ManagedPlayer = ManagedPlayer(e.player as OfflinePlayer, JSONFile("${PlayerManagerKotlin.instance.dataFolder}/players.json"))
+            val p: ManagedPlayer = ManagedPlayer(e.player as OfflinePlayer, PlayerManagerKotlin.instance.playerJSONFile)
 
             if(p.ban) {
                 if(p.temp) {

@@ -3,7 +3,6 @@ package io.github.kuroka3.playermanagerkotlin.Event
 import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
 import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
 import io.github.kuroka3.playermanagerkotlin.Utils.JSONFile
-import io.papermc.paper.event.player.AbstractChatEvent
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.TextComponent
@@ -16,7 +15,7 @@ class MutedChatEvent: Listener {
     @EventHandler
     fun onChat(e: AsyncChatEvent) {
         try {
-            val managedPlayer = ManagedPlayer(Bukkit.getOfflinePlayer(e.player.uniqueId), JSONFile("${PlayerManagerKotlin.instance.dataFolder}/players.json"))
+            val managedPlayer = ManagedPlayer(Bukkit.getOfflinePlayer(e.player.uniqueId), PlayerManagerKotlin.instance.playerJSONFile)
             val mod: TextComponent = text("[").color(TextColor.color(0x00aaaaaa)).append(
                 text("!").color(TextColor.color(0x00ff55ff))
             ).append(

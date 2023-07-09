@@ -1,10 +1,10 @@
 name: 'PlayerManagerKotlin'
 version: '${version}'
 main: 'io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin'
-api-version: '${paperVersion}'
+api-version: '1.20'
 libraries:
-  - org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}
-  - org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}
+  - org.jetbrains.kotlin:kotlin-stdlib:1.7.21
+  - org.jetbrains.kotlin:kotlin-reflect:1.7.21
   - io.github.monun:kommand-core:3.1.6
   - io.github.monun:tap-core:4.9.3
 

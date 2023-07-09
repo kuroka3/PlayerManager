@@ -27,7 +27,7 @@ class ManagedPlayer(pP: OfflinePlayer, jsonFileP: JSONFile) {
             jsonFile.saveJSONFile(JSONObject())
         }
 
-        val tmobj: JSONObject = jsonFile.jSONObject!!
+        val tmobj: JSONObject = jsonFile.jsonObject!!
 
         this.jobj = tmobj[p.uniqueId.toString()] as JSONObject
 
@@ -154,7 +154,7 @@ class ManagedPlayer(pP: OfflinePlayer, jsonFileP: JSONFile) {
 
     fun save() {
 
-        val tmobj: JSONObject = jsonFile.jSONObject!!
+        val tmobj: JSONObject = jsonFile.jsonObject!!
 
         tmobj[p.uniqueId.toString()] = jobj
 

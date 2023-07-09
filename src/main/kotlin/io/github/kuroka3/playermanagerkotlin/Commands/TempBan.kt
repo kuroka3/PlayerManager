@@ -2,8 +2,8 @@ package io.github.kuroka3.playermanagerkotlin.Commands
 
 import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
 import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
+import io.github.kuroka3.playermanagerkotlin.Utils.BanIDManager
 import io.github.kuroka3.playermanagerkotlin.Utils.JSONFile
-import io.github.monun.kommand.KommandArgument
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
 import io.github.monun.kommand.kommand
@@ -29,7 +29,7 @@ object TempBan {
         )
 
         PlayerManagerKotlin.kommand {
-            register("kotlintempban") {
+            register("tempban") {
                 requires { (isPlayer && hasPermission("playermanager.ban")) || isConsole }
 
                 val onlinePlayer = string().apply {
@@ -90,13 +90,18 @@ object TempBan {
                                             (LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddhhmmssSS"))
                                                 .toLong() * 5).toString()
 
+                                        var moder: String
+
+                                        if(isConsole) moder = "Server"
+                                        else moder = (sender as Player).uniqueId.toString()
+
                                         val targetPlayer = Bukkit.getOfflinePlayer(target)
 
                                         if (!targetPlayer.hasPlayedBefore()) throw IllegalArgumentException("Targeted player not found")
 
                                         val managedPlayer = ManagedPlayer(
                                             Bukkit.getOfflinePlayer(target),
-                                            JSONFile("${PlayerManagerKotlin.dataFolder}/players.json")
+                                            PlayerManagerKotlin.playerJSONFile
                                         )
 
                                         var toban = LocalDateTime.now()
@@ -148,6 +153,8 @@ object TempBan {
                                                 text(reason).color(color(0x00ffaa00))
                                             )
                                         )
+
+                                        BanIDManager.setBan(id, managedPlayer.p.uniqueId, moder, reason, LocalDateTime.now(), true, "$period$unit")
                                     } catch (e: Exception) {
                                         when (e) {
                                             is IllegalArgumentException, is IllegalAccessException -> sender.sendMessage(

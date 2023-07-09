@@ -15,12 +15,12 @@ class JSONFile(pathname: String) : File(pathname) {
     @get:Throws(IOException::class)
     val isEmpty: Boolean
         get() {
-            val a = jSONObject
+            val a = jsonObject
             return a == null
         }
 
     @get:Throws(IOException::class)
-    val jSONObject: JSONObject?
+    val jsonObject: JSONObject?
         get() {
             val reader = FileReader(this)
             jobj = try {
@@ -32,7 +32,7 @@ class JSONFile(pathname: String) : File(pathname) {
         }
 
     @Throws(IOException::class)
-    fun updateJSONObject() {
+    fun updatejsonObject() {
         val reader = FileReader(this)
         jobj = try {
             parser.parse(reader) as JSONObject

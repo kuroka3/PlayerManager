@@ -3,19 +3,15 @@ package io.github.kuroka3.playermanagerkotlin.Commands
 import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
 import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
 import io.github.kuroka3.playermanagerkotlin.Utils.JSONFile
-import io.github.monun.kommand.KommandArgument
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
 import io.github.monun.kommand.kommand
 import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.TextColor.color
-import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.lang.Exception
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 object Mute {
     fun registerKommand() {
@@ -29,7 +25,7 @@ object Mute {
         )
 
         PlayerManagerKotlin.kommand {
-            register("kotlinmute") {
+            register("mute") {
                 requires { (isPlayer && hasPermission("playermanager.mute")) || isConsole }
 
                 val onlinePlayer = string().apply {
@@ -64,7 +60,7 @@ object Mute {
 
                                 val managedPlayer: ManagedPlayer = ManagedPlayer(
                                     Bukkit.getOfflinePlayer(target),
-                                    JSONFile("${PlayerManagerKotlin.dataFolder}/players.json")
+                                    PlayerManagerKotlin.playerJSONFile
                                 )
 
                                 managedPlayer.mute()

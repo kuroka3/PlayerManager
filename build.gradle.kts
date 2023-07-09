@@ -2,7 +2,7 @@ import org.gradle.configurationcache.extensions.capitalized
 
 plugins {
     idea
-    kotlin("jvm") version Dependency.Kotlin.Version
+    kotlin("jvm") version "1.7.21"
     id("io.papermc.paperweight.userdev") version "1.5.3"
 }
 
@@ -19,20 +19,18 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
-    paperweight.paperDevBundle("${Dependency.Paper.Version}-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.20-R0.1-SNAPSHOT")
 
     implementation("io.github.monun:kommand-api:3.1.6")
     implementation("io.github.monun:tap-api:4.9.3")
     implementation("com.googlecode.json-simple:json-simple:1.1.1")
-//    implementation("io.github.monun:invfx-api:latest.release")
-//    implementation("io.github.monun:heartbeat-coroutines:latest.release")
 }
 
 extra.apply {
     set("pluginName", project.name.split('-').joinToString("") { it.capitalize() })
     set("packageName", project.name.replace("-", ""))
-    set("kotlinVersion", Dependency.Kotlin.Version)
-    set("paperVersion", Dependency.Paper.Version.split('.').take(2).joinToString("."))
+    set("kotlinVersion", "1.7.21")
+    set("paperVersion", "1.7.21".split('.').take(2).joinToString("."))
 }
 
 tasks {

@@ -24,7 +24,7 @@ object UnBan {
         )
 
         PlayerManagerKotlin.kommand {
-            register("kotlinunban") {
+            register("unban") {
                 requires { (isPlayer && hasPermission("playermanager.ban")) || isConsole }
 
                 val onlinePlayer = KommandArgument.string().apply {
@@ -59,7 +59,7 @@ object UnBan {
 
                                 val managedPlayer: ManagedPlayer = ManagedPlayer(
                                     Bukkit.getOfflinePlayer(target),
-                                    JSONFile("${PlayerManagerKotlin.dataFolder}/players.json")
+                                    PlayerManagerKotlin.playerJSONFile
                                 )
 
                                 managedPlayer.unban(managedPlayer.temp)

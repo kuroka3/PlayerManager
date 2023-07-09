@@ -2,6 +2,7 @@ package io.github.kuroka3.playermanagerkotlin.Commands
 
 import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
 import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
+import io.github.kuroka3.playermanagerkotlin.Utils.BanIDManager
 import io.github.kuroka3.playermanagerkotlin.Utils.JSONFile
 import io.github.monun.kommand.KommandArgument
 import io.github.monun.kommand.StringType
@@ -28,7 +29,7 @@ object Ban {
         )
 
         PlayerManagerKotlin.kommand {
-            register("kotlinban") {
+            register("defaultban") {
                 requires { (isPlayer && hasPermission("playermanager.ban")) || isConsole }
 
                 val onlinePlayer = KommandArgument.string().apply {
@@ -64,9 +65,14 @@ object Ban {
 
                                 if (!targetPlayer.hasPlayedBefore()) throw IllegalArgumentException("Targeted player not found")
 
+                                var moder: String
+
+                                if(isConsole) moder = "Server"
+                                else moder = (sender as Player).uniqueId.toString()
+
                                 val managedPlayer: ManagedPlayer = ManagedPlayer(
                                     Bukkit.getOfflinePlayer(target),
-                                    JSONFile("${PlayerManagerKotlin.dataFolder}/players.json")
+                                    PlayerManagerKotlin.playerJSONFile
                                 )
 
                                 managedPlayer.ban(reason, id)
@@ -116,6 +122,8 @@ object Ban {
                                         text(reason).color(color(0x00ffaa00))
                                     )
                                 )
+
+                                BanIDManager.setBan(id, managedPlayer.p.uniqueId, moder, reason, LocalDateTime.now(), false)
                             } catch (e: Exception) {
                                 when (e) {
 
