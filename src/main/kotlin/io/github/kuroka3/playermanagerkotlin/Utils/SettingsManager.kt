@@ -1,7 +1,6 @@
 package io.github.kuroka3.playermanagerkotlin.Utils
 
-import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
-import org.yaml.snakeyaml.Yaml
+import io.github.kuroka3.playermanagerkotlin.PlayerManager
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
@@ -15,7 +14,7 @@ object SettingsManager {
     //TODO : Language Settings
 
     fun load() {
-        file = File("${PlayerManagerKotlin.instance.dataFolder}/config.properties")
+        file = File("${PlayerManager.instance.dataFolder}/config.properties")
 
         if(!file.isFile) {
             file.createNewFile()

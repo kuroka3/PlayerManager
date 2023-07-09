@@ -1,8 +1,7 @@
 package io.github.kuroka3.playermanagerkotlin.Commands
 
 import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
-import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
-import io.github.kuroka3.playermanagerkotlin.Utils.JSONFile
+import io.github.kuroka3.playermanagerkotlin.PlayerManager
 import io.github.monun.kommand.KommandArgument
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
@@ -15,7 +14,7 @@ import org.bukkit.Bukkit
 object UnBan {
     fun registerKommand() {
 
-        val PlayerManagerKotlin = PlayerManagerKotlin.instance
+        val PlayerManager = PlayerManager.instance
 
         val mod: TextComponent = text("[").color(color(0x00aaaaaa)).append(
             text("!").color(color(0x00ff55ff))
@@ -23,7 +22,7 @@ object UnBan {
             text("] ").color(color(0x00aaaaaa))
         )
 
-        PlayerManagerKotlin.kommand {
+        PlayerManager.kommand {
             register("unban") {
                 requires { (isPlayer && hasPermission("playermanager.ban")) || isConsole }
 
@@ -59,7 +58,7 @@ object UnBan {
 
                                 val managedPlayer: ManagedPlayer = ManagedPlayer(
                                     Bukkit.getOfflinePlayer(target),
-                                    PlayerManagerKotlin.playerJSONFile
+                                    PlayerManager.playerJSONFile
                                 )
 
                                 managedPlayer.unban(managedPlayer.temp)

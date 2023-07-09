@@ -1,6 +1,6 @@
 package io.github.kuroka3.playermanagerkotlin.Event
 
-import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
+import io.github.kuroka3.playermanagerkotlin.PlayerManager
 import io.github.kuroka3.playermanagerkotlin.Utils.SettingsManager
 import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.TextComponent
@@ -31,7 +31,7 @@ class CommandEvent : Listener {
     fun onCommand(e: ServerCommandEvent) {
         if(e.command.startsWith("ban") && !e.command.startsWith("banid") && SettingsManager.get("blockOriginalCommands", true).toBoolean()) {
             e.isCancelled = true
-            PlayerManagerKotlin.instance.logger.warning("서버 기본 관리 명령어의 사용이 차단 되어있습니다.")
+            PlayerManager.instance.logger.warning("서버 기본 관리 명령어의 사용이 차단 되어있습니다.")
         }
     }
 }

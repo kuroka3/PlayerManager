@@ -10,10 +10,10 @@ import io.github.kuroka3.playermanagerkotlin.Utils.SettingsManager
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
-class PlayerManagerKotlin : JavaPlugin() {
+class PlayerManager : JavaPlugin() {
 
     companion object {
-        lateinit var instance: PlayerManagerKotlin
+        lateinit var instance: PlayerManager
     }
 
     lateinit var playerJSONFile: JSONFile

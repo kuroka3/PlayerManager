@@ -1,10 +1,9 @@
 package io.github.kuroka3.playermanagerkotlin.Commands
 
-import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
+import io.github.kuroka3.playermanagerkotlin.PlayerManager
 import io.github.kuroka3.playermanagerkotlin.Utils.BanIDManager
 import io.github.monun.kommand.getValue
 import io.github.monun.kommand.kommand
-import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.TextColor
@@ -15,7 +14,7 @@ import java.util.*
 object BanID {
     fun registerKommand() {
 
-        val PlayerManagerKotlin = PlayerManagerKotlin.instance
+        val PlayerManager = PlayerManager.instance
 
         val mod: TextComponent = text("[").color(TextColor.color(0x00aaaaaa)).append(
             text("!").color(TextColor.color(0x00ff55ff))
@@ -23,7 +22,7 @@ object BanID {
             text("] ").color(TextColor.color(0x00aaaaaa))
         )
 
-        PlayerManagerKotlin.kommand {
+        PlayerManager.kommand {
             register("banid") {
                 then("id" to string()) {
                     executes {

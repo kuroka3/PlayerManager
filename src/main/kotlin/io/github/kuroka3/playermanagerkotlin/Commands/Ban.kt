@@ -1,9 +1,8 @@
 package io.github.kuroka3.playermanagerkotlin.Commands
 
 import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
-import io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin
+import io.github.kuroka3.playermanagerkotlin.PlayerManager
 import io.github.kuroka3.playermanagerkotlin.Utils.BanIDManager
-import io.github.kuroka3.playermanagerkotlin.Utils.JSONFile
 import io.github.monun.kommand.KommandArgument
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
@@ -20,7 +19,7 @@ import java.time.format.DateTimeFormatter
 object Ban {
     fun registerKommand() {
 
-        val PlayerManagerKotlin = PlayerManagerKotlin.instance
+        val PlayerManager = PlayerManager.instance
 
         val mod: TextComponent = text("[").color(color(0x00aaaaaa)).append(
             text("!").color(color(0x00ff55ff))
@@ -28,7 +27,7 @@ object Ban {
             text("] ").color(color(0x00aaaaaa))
         )
 
-        PlayerManagerKotlin.kommand {
+        PlayerManager.kommand {
             register("defaultban") {
                 requires { (isPlayer && hasPermission("playermanager.ban")) || isConsole }
 
@@ -72,7 +71,7 @@ object Ban {
 
                                 val managedPlayer: ManagedPlayer = ManagedPlayer(
                                     Bukkit.getOfflinePlayer(target),
-                                    PlayerManagerKotlin.playerJSONFile
+                                    PlayerManager.playerJSONFile
                                 )
 
                                 managedPlayer.ban(reason, id)
@@ -107,7 +106,7 @@ object Ban {
                                     }
 
                                     Bukkit.getScheduler().runTaskLater(
-                                        io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin.instance,
+                                        io.github.kuroka3.playermanagerkotlin.PlayerManager.instance,
                                         kick,
                                         100L
                                     )
