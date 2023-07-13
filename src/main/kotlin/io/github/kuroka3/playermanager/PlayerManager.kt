@@ -1,6 +1,6 @@
 package io.github.kuroka3.playermanager
 
-import io.github.kuroka3.PlayerManagerKotlinkotlin.Event.ConnectEvent
+import io.github.kuroka3.PlayerManager.Event.ConnectEvent
 import io.github.kuroka3.playermanager.Commands.*
 import io.github.kuroka3.playermanager.Event.CommandEvent
 import io.github.kuroka3.playermanager.Event.MutedChatEvent
