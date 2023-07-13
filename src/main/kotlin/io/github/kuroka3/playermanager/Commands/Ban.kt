@@ -1,8 +1,9 @@
-package io.github.kuroka3.playermanagerkotlin.Commands
+package io.github.kuroka3.playermanager.Commands
 
-import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
-import io.github.kuroka3.playermanagerkotlin.PlayerManager
-import io.github.kuroka3.playermanagerkotlin.Utils.BanIDManager
+import io.github.kuroka3.playermanager.Class.ManagedPlayer
+import io.github.kuroka3.playermanager.PlayerManager
+import io.github.kuroka3.playermanager.Utils.BanIDManager
+import io.github.kuroka3.playermanager.Utils.CaseManager
 import io.github.monun.kommand.KommandArgument
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
@@ -70,7 +71,7 @@ object Ban {
                                 else moder = (sender as Player).uniqueId.toString()
 
                                 val managedPlayer: ManagedPlayer = ManagedPlayer(
-                                    Bukkit.getOfflinePlayer(target),
+                                    targetPlayer,
                                     PlayerManager.playerJSONFile
                                 )
 
@@ -106,7 +107,7 @@ object Ban {
                                     }
 
                                     Bukkit.getScheduler().runTaskLater(
-                                        io.github.kuroka3.playermanagerkotlin.PlayerManager.instance,
+                                        io.github.kuroka3.playermanager.PlayerManager.instance,
                                         kick,
                                         100L
                                     )
@@ -123,6 +124,7 @@ object Ban {
                                 )
 
                                 BanIDManager.setBan(id, managedPlayer.p.uniqueId, moder, reason, LocalDateTime.now(), false)
+                                CaseManager.addCase(1, moder, managedPlayer.p.uniqueId, reason, LocalDateTime.now())
                             } catch (e: Exception) {
                                 when (e) {
 

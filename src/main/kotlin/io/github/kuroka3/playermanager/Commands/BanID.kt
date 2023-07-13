@@ -1,7 +1,7 @@
-package io.github.kuroka3.playermanagerkotlin.Commands
+package io.github.kuroka3.playermanager.Commands
 
-import io.github.kuroka3.playermanagerkotlin.PlayerManager
-import io.github.kuroka3.playermanagerkotlin.Utils.BanIDManager
+import io.github.kuroka3.playermanager.PlayerManager
+import io.github.kuroka3.playermanager.Utils.BanIDManager
 import io.github.monun.kommand.getValue
 import io.github.monun.kommand.kommand
 import net.kyori.adventure.text.Component.text

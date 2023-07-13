@@ -1,12 +1,12 @@
-package io.github.kuroka3.playermanagerkotlin
+package io.github.kuroka3.playermanager
 
 import io.github.kuroka3.PlayerManagerKotlinkotlin.Event.ConnectEvent
-import io.github.kuroka3.playermanagerkotlin.Commands.*
-import io.github.kuroka3.playermanagerkotlin.Event.CommandEvent
-import io.github.kuroka3.playermanagerkotlin.Event.MutedChatEvent
-import io.github.kuroka3.playermanagerkotlin.Utils.BanIDManager
-import io.github.kuroka3.playermanagerkotlin.Utils.JSONFile
-import io.github.kuroka3.playermanagerkotlin.Utils.SettingsManager
+import io.github.kuroka3.playermanager.Commands.*
+import io.github.kuroka3.playermanager.Event.CommandEvent
+import io.github.kuroka3.playermanager.Event.MutedChatEvent
+import io.github.kuroka3.playermanager.Utils.BanIDManager
+import io.github.kuroka3.playermanager.Utils.JSONFile
+import io.github.kuroka3.playermanager.Utils.SettingsManager
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
@@ -41,6 +41,10 @@ class PlayerManager : JavaPlugin() {
         Warn.registerKommand()
         UnBan.registerKommand()
         BanID.registerKommand()
+        Case.registerKommand()
+        Kick.registerKommand()
+        GiveReason.registerKommand()
+        UnWarn.registerKommand()
 
         SettingsManager.load()
         BanIDManager.setInit()

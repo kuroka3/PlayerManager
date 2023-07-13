@@ -1,4 +1,4 @@
-package io.github.kuroka3.playermanagerkotlin.Utils
+package io.github.kuroka3.playermanager.Utils
 
 import org.json.simple.JSONObject
 import org.json.simple.parser.JSONParser

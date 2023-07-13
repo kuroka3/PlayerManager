@@ -1,7 +1,7 @@
-package io.github.kuroka3.playermanagerkotlin.Event
+package io.github.kuroka3.playermanager.Event
 
-import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
-import io.github.kuroka3.playermanagerkotlin.PlayerManager
+import io.github.kuroka3.playermanager.Class.ManagedPlayer
+import io.github.kuroka3.playermanager.PlayerManager
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.TextComponent

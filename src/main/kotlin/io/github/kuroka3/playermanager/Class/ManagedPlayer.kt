@@ -1,6 +1,6 @@
-package io.github.kuroka3.playermanagerkotlin.Class
+package io.github.kuroka3.playermanager.Class
 
-import io.github.kuroka3.playermanagerkotlin.Utils.JSONFile
+import io.github.kuroka3.playermanager.Utils.JSONFile
 import org.bukkit.OfflinePlayer
 import org.json.simple.JSONObject
 import java.time.LocalDateTime
@@ -96,6 +96,14 @@ class ManagedPlayer(pP: OfflinePlayer, jsonFileP: JSONFile) {
 
         mute = false
         jobj["mute"] = mute
+        save()
+    }
+
+    fun unwarn() {
+        if(warns < 1) throw IllegalAccessException("Targeted player is not warned")
+
+        warns--
+        jobj["warns"] = warns
         save()
     }
 

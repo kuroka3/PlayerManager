@@ -1,1 +1,1 @@
-rootProject.name = "PlayerManagerKotlin"
+rootProject.name = "PlayerManager"

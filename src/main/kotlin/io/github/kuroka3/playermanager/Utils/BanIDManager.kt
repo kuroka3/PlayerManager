@@ -1,6 +1,6 @@
-package io.github.kuroka3.playermanagerkotlin.Utils
+package io.github.kuroka3.playermanager.Utils
 
-import io.github.kuroka3.playermanagerkotlin.PlayerManager
+import io.github.kuroka3.playermanager.PlayerManager
 import org.json.simple.JSONObject
 import java.io.IOException
 import java.time.LocalDateTime

@@ -1,8 +1,9 @@
-package io.github.kuroka3.playermanagerkotlin.Commands
+package io.github.kuroka3.playermanager.Commands
 
-import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
-import io.github.kuroka3.playermanagerkotlin.PlayerManager
-import io.github.kuroka3.playermanagerkotlin.Utils.BanIDManager
+import io.github.kuroka3.playermanager.Class.ManagedPlayer
+import io.github.kuroka3.playermanager.PlayerManager
+import io.github.kuroka3.playermanager.Utils.BanIDManager
+import io.github.kuroka3.playermanager.Utils.CaseManager
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
 import io.github.monun.kommand.kommand
@@ -137,7 +138,7 @@ object TempBan {
                                             }
 
                                             Bukkit.getScheduler().runTaskLater(
-                                                io.github.kuroka3.playermanagerkotlin.PlayerManager.instance,
+                                                io.github.kuroka3.playermanager.PlayerManager.instance,
                                                 kick,
                                                 100L
                                             )
@@ -154,6 +155,7 @@ object TempBan {
                                         )
 
                                         BanIDManager.setBan(id, managedPlayer.p.uniqueId, moder, reason, LocalDateTime.now(), true, "$period$unit")
+                                        CaseManager.addCase(4, moder, managedPlayer.p.uniqueId, reason, LocalDateTime.now(), "$period$unit")
                                     } catch (e: Exception) {
                                         when (e) {
                                             is IllegalArgumentException, is IllegalAccessException -> sender.sendMessage(

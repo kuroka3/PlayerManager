@@ -1,7 +1,8 @@
-package io.github.kuroka3.playermanagerkotlin.Commands
+package io.github.kuroka3.playermanager.Commands
 
-import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
-import io.github.kuroka3.playermanagerkotlin.PlayerManager
+import io.github.kuroka3.playermanager.Class.ManagedPlayer
+import io.github.kuroka3.playermanager.PlayerManager
+import io.github.kuroka3.playermanager.Utils.CaseManager
 import io.github.monun.kommand.KommandArgument
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
@@ -11,8 +12,9 @@ import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.TextColor.color
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import java.time.LocalDateTime
 
-object UnMute {
+object UnBan {
     fun registerKommand() {
 
         val PlayerManager = PlayerManager.instance
@@ -24,8 +26,8 @@ object UnMute {
         )
 
         PlayerManager.kommand {
-            register("unmute") {
-                requires { (isPlayer && hasPermission("playermanager.mute")) || isConsole }
+            register("unban") {
+                requires { (isPlayer && hasPermission("playermanager.ban")) || isConsole }
 
                 val onlinePlayer = KommandArgument.string().apply {
                     suggests {
@@ -57,35 +59,29 @@ object UnMute {
 
                                 if (!targetPlayer.hasPlayedBefore()) throw IllegalArgumentException("Targeted player not found")
 
+                                var moder: String
+
+                                if(isConsole) moder = "Server"
+                                else moder = (sender as Player).uniqueId.toString()
+
                                 val managedPlayer: ManagedPlayer = ManagedPlayer(
-                                    Bukkit.getOfflinePlayer(target),
+                                    targetPlayer,
                                     PlayerManager.playerJSONFile
                                 )
 
-                                managedPlayer.unmute()
+                                managedPlayer.unban(managedPlayer.temp)
 
                                 sender.sendMessage(
                                     mod.append(
                                         text("${managedPlayer.p.name}").color(color(0x00ffff55))
                                     ).append(
-                                        text("님의 뮤트를 해제했습니다: ").color(color(0x0055ff55))
+                                        text("님의 차단을 해제했습니다: ").color(color(0x0055ff55))
                                     ).append(
                                         text(reason).color(color(0x00ffaa00))
                                     )
                                 )
 
-                                if(managedPlayer.p.isOnline) {
-                                    val onp: Player = Bukkit.getPlayer(managedPlayer.p.uniqueId)!!
-
-                                    onp.sendMessage(
-                                        mod.append(
-                                            text("관리자가 당신의 뮤트를 해제하였습니다: ").color(color(0x0055ff55))
-                                        ).append(
-                                            text(reason).color(color(0x00ffaa00))
-                                        )
-                                    )
-
-                                }
+                                CaseManager.addCase(5, moder, managedPlayer.p.uniqueId, reason, LocalDateTime.now())
                             } catch (e: Exception) {
                                 when (e) {
 

@@ -1,7 +1,7 @@
 package io.github.kuroka3.PlayerManagerKotlinkotlin.Event
 
-import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
-import io.github.kuroka3.playermanagerkotlin.PlayerManager
+import io.github.kuroka3.playermanager.Class.ManagedPlayer
+import io.github.kuroka3.playermanager.PlayerManager
 import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.OfflinePlayer

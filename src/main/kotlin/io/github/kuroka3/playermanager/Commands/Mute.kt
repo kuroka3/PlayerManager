@@ -1,7 +1,8 @@
-package io.github.kuroka3.playermanagerkotlin.Commands
+package io.github.kuroka3.playermanager.Commands
 
-import io.github.kuroka3.playermanagerkotlin.Class.ManagedPlayer
-import io.github.kuroka3.playermanagerkotlin.PlayerManager
+import io.github.kuroka3.playermanager.Class.ManagedPlayer
+import io.github.kuroka3.playermanager.PlayerManager
+import io.github.kuroka3.playermanager.Utils.CaseManager
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
 import io.github.monun.kommand.kommand
@@ -11,6 +12,7 @@ import net.kyori.adventure.text.format.TextColor.color
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.lang.Exception
+import java.time.LocalDateTime
 
 object Mute {
     fun registerKommand() {
@@ -57,8 +59,13 @@ object Mute {
 
                                 if (!targetPlayer.hasPlayedBefore()) throw IllegalArgumentException("Targeted player not found")
 
+                                var moder: String
+
+                                if(isConsole) moder = "Server"
+                                else moder = (sender as Player).uniqueId.toString()
+
                                 val managedPlayer: ManagedPlayer = ManagedPlayer(
-                                    Bukkit.getOfflinePlayer(target),
+                                    targetPlayer,
                                     PlayerManager.playerJSONFile
                                 )
 
@@ -84,6 +91,8 @@ object Mute {
                                         text(reason).color(color(0x00ffaa00))
                                     )
                                 )
+
+                                CaseManager.addCase(3, moder, managedPlayer.p.uniqueId, reason, LocalDateTime.now())
                             } catch (e: Exception) {
                                 when (e) {
                                     is IllegalArgumentException, is IllegalAccessException -> sender.sendMessage(

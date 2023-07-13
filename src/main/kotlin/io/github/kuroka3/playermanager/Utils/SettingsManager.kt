@@ -1,6 +1,6 @@
-package io.github.kuroka3.playermanagerkotlin.Utils
+package io.github.kuroka3.playermanager.Utils
 
-import io.github.kuroka3.playermanagerkotlin.PlayerManager
+import io.github.kuroka3.playermanager.PlayerManager
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter

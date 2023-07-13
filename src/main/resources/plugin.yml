@@ -1,6 +1,6 @@
-name: 'PlayerManagerKotlin'
+name: 'PlayerManager'
 version: '${version}'
-main: 'io.github.kuroka3.playermanagerkotlin.PlayerManagerKotlin'
+main: 'io.github.kuroka3.playermanager.PlayerManager'
 api-version: '1.20'
 libraries:
   - org.jetbrains.kotlin:kotlin-stdlib:1.7.21
@@ -10,8 +10,17 @@ libraries:
 
 permissions:
   playermanager.ban:
-    description: asdf
+    description: Ban Player Permission
+    default: false
   playermanager.warn:
-    description: asdf
+    description: Warn Player Permission
+    default: false
   playermanager.mute:
-    description: asdf
+    description: Mute Player Permission
+    default: false
+  playermanager.kick:
+    description: Kick Player Permission
+    default: false
+  playermanager.managecase:
+    description: Manage Case Reason Permission
+    default: false
