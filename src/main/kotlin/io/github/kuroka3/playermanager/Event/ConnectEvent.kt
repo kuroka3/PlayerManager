@@ -1,4 +1,4 @@
-package io.github.kuroka3.PlayerManagerKotlinkotlin.Event
+package io.github.kuroka3.PlayerManager.Event
 
 import io.github.kuroka3.playermanager.Class.ManagedPlayer
 import io.github.kuroka3.playermanager.PlayerManager
