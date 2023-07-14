@@ -2,6 +2,8 @@ package io.github.kuroka3.playermanager.Commands
 
 import io.github.kuroka3.playermanager.PlayerManager
 import io.github.kuroka3.playermanager.Utils.CaseManager
+import io.github.kuroka3.playermanager.Utils.Language
+import io.github.kuroka3.playermanager.Utils.SendersLang
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
 import io.github.monun.kommand.kommand
@@ -35,9 +37,9 @@ object GiveReason {
                                 CaseManager.giveReason(case, reason)
 
                                 sender.sendMessage(mod.append(text(case.toString()).color(TextColor.color(0x00ffff55))).append(
-                                    text("번 Case의 Reason을 다음과 같이 변경했습니다: ").color(TextColor.color(0x0055ff55))).append(
-                                        text(reason).color(TextColor.color(0x00ffaa00))
-                                    ))
+                                    text("${Language[SendersLang[sender, isPlayer], "casegive.success"]}: ").color(TextColor.color(0x0055ff55))).append(
+                                    text(reason).color(TextColor.color(0x00ffaa00))
+                                ))
 
                             } catch (e: Exception) {
                                 when (e) {

@@ -11,8 +11,6 @@ object SettingsManager {
     val settings: Properties = Properties()
     lateinit var file: File
 
-    //TODO : Language Settings
-
     fun load() {
         file = File("${PlayerManager.instance.dataFolder}/config.properties")
 
@@ -26,10 +24,11 @@ object SettingsManager {
 
     private fun setDefault() {
         settings.setProperty("blockOriginalCommands", "true")
+        settings.setProperty("defaultLanguage", "en-us")
         settings.store(FileWriter(file), null)
     }
 
-    fun get(key: String): String? {
+    operator fun get(key: String): String? {
         try {
             if(settings.getProperty(key) == null) {
                 throw NullPointerException()
@@ -42,7 +41,7 @@ object SettingsManager {
         }
     }
 
-    fun get(key: String, default: Any): String? {
+    operator fun get(key: String, default: Any): String? {
         try {
 
             if(settings.getProperty(key) == null) {

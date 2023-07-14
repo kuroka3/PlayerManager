@@ -3,6 +3,8 @@ package io.github.kuroka3.playermanager.Commands
 import io.github.kuroka3.playermanager.Class.ManagedPlayer
 import io.github.kuroka3.playermanager.PlayerManager
 import io.github.kuroka3.playermanager.Utils.CaseManager
+import io.github.kuroka3.playermanager.Utils.Language
+import io.github.kuroka3.playermanager.Utils.SettingsManager
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
 import io.github.monun.kommand.kommand
@@ -10,6 +12,7 @@ import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.TextColor.color
 import org.bukkit.Bukkit
+import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import java.lang.Exception
 import java.time.LocalDateTime
@@ -75,22 +78,34 @@ object Mute {
                                     val onp: Player = Bukkit.getPlayer(managedPlayer.p.uniqueId)!!
                                     onp.sendMessage(
                                         mod.append(
-                                            text("관리자가 당신을 뮤트하였습니다: ").color(color(0x00ff5555))
+                                            text("${Language[managedPlayer.lang, "player.muted"]}: ").color(color(0x00ff5555))
                                         ).append(
                                             text(reason).color(color(0x00ffaa00))
                                         )
                                     )
                                 }
 
-                                sender.sendMessage(
-                                    mod.append(
-                                        text("${managedPlayer.p.name}").color(color(0x00ffff55))
-                                    ).append(
-                                        text("님을 뮤트하였습니다: ").color(color(0x00ff5555))
-                                    ).append(
-                                        text(reason).color(color(0x00ffaa00))
+                                if(isPlayer) {
+                                    sender.sendMessage(
+                                        mod.append(
+                                            text("${managedPlayer.p.name}").color(color(0x00ffff55))
+                                        ).append(
+                                            text("${Language[ManagedPlayer(sender as OfflinePlayer, PlayerManager.playerJSONFile).lang, "sender.mute"]}: ").color(color(0x00ff5555))
+                                        ).append(
+                                            text(reason).color(color(0x00ffaa00))
+                                        )
                                     )
-                                )
+                                } else {
+                                    sender.sendMessage(
+                                        mod.append(
+                                            text("${managedPlayer.p.name}").color(color(0x00ffff55))
+                                        ).append(
+                                            text("${Language[SettingsManager["defaultLanguage", "en-us"].toString(), "sender.mute"]}: ").color(color(0x00ff5555))
+                                        ).append(
+                                            text(reason).color(color(0x00ffaa00))
+                                        )
+                                    )
+                                }
 
                                 CaseManager.addCase(3, moder, managedPlayer.p.uniqueId, reason, LocalDateTime.now())
                             } catch (e: Exception) {

@@ -1,8 +1,7 @@
 package io.github.kuroka3.playermanager.Commands
 
 import io.github.kuroka3.playermanager.PlayerManager
-import io.github.kuroka3.playermanager.Utils.BanIDManager
-import io.github.kuroka3.playermanager.Utils.CaseManager
+import io.github.kuroka3.playermanager.Utils.*
 import io.github.monun.kommand.getValue
 import io.github.monun.kommand.kommand
 import net.kyori.adventure.text.Component.text
@@ -25,13 +24,14 @@ object Case {
 
         PlayerManager.kommand {
             register("case") {
+                requires { isConsole || isPlayer }
                 then("case" to int()) {
                     executes {
                         val case: Int by it
                         val info: JSONObject? = CaseManager.getCase(case)
 
                         if(info == null) {
-                            sender.sendMessage(mod.append(text("해당 Case 번호를 찾을 수 없습니다").color(TextColor.color(0x00ff55555))))
+                            sender.sendMessage(mod.append(text(Language[SendersLang[sender, isPlayer], "case.notfound"]).color(TextColor.color(0x00ff55555))))
                             return@executes
                         }
 
@@ -84,7 +84,7 @@ object Case {
                             val info: JSONObject? = CaseManager.getCase(case)
 
                             if(info == null) {
-                                sender.sendMessage(mod.append(text("해당 Case 번호를 찾을 수 없습니다").color(TextColor.color(0x00ff55555))))
+                                sender.sendMessage(mod.append(text(Language[SendersLang[sender, isPlayer], "case.notfound"]).color(TextColor.color(0x00ff55555))))
                                 return@executes
                             }
 
@@ -138,7 +138,7 @@ object Case {
                         val info: JSONObject? = CaseManager.getCase(case)
 
                         if(info == null) {
-                            sender.sendMessage(mod.append(text("해당 Case 번호를 찾을 수 없습니다").color(TextColor.color(0x00ff55555))))
+                            sender.sendMessage(mod.append(text(Language[SendersLang[sender, isPlayer], "case.notfound"]).color(TextColor.color(0x00ff55555))))
                             return@executes
                         }
 
@@ -191,7 +191,7 @@ object Case {
                             val info: JSONObject? = CaseManager.getCase(case)
 
                             if(info == null) {
-                                sender.sendMessage(mod.append(text("해당 Case 번호를 찾을 수 없습니다").color(TextColor.color(0x00ff55555))))
+                                sender.sendMessage(mod.append(text(Language[SendersLang[sender, isPlayer], "case.notfound"]).color(TextColor.color(0x00ff55555))))
                                 return@executes
                             }
 

@@ -1,7 +1,7 @@
 package io.github.kuroka3.playermanager.Commands
 
 import io.github.kuroka3.playermanager.PlayerManager
-import io.github.kuroka3.playermanager.Utils.BanIDManager
+import io.github.kuroka3.playermanager.Utils.*
 import io.github.monun.kommand.getValue
 import io.github.monun.kommand.kommand
 import net.kyori.adventure.text.Component.text
@@ -24,13 +24,14 @@ object BanID {
 
         PlayerManager.kommand {
             register("banid") {
+                requires { isConsole || isPlayer }
                 then("id" to string()) {
                     executes {
                         val id: String by it
                         val info: JSONObject? = BanIDManager.getBanInfo(id)
 
                         if(info == null) {
-                            sender.sendMessage(mod.append(text("해당 BanID를 찾을 수 없습니다").color(TextColor.color(0x00ff55555))))
+                            sender.sendMessage(mod.append(text(Language[SendersLang[sender, isPlayer], "banid.notfound"]).color(TextColor.color(0x00ff55555))))
                             return@executes
                         }
 
@@ -72,7 +73,7 @@ object BanID {
                             val info: JSONObject? = BanIDManager.getBanInfo(id)
 
                             if(info == null) {
-                                sender.sendMessage(mod.append(text("해당 BanID를 찾을 수 없습니다").color(TextColor.color(0x00ff55555))))
+                                sender.sendMessage(mod.append(text(Language[SendersLang[sender, isPlayer], "banid.notfound"]).color(TextColor.color(0x00ff55555))))
                                 return@executes
                             }
 

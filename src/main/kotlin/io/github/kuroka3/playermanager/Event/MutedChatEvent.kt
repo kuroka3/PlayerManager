@@ -2,6 +2,7 @@ package io.github.kuroka3.playermanager.Event
 
 import io.github.kuroka3.playermanager.Class.ManagedPlayer
 import io.github.kuroka3.playermanager.PlayerManager
+import io.github.kuroka3.playermanager.Utils.Language
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.TextComponent
@@ -25,7 +26,7 @@ class MutedChatEvent: Listener {
                 e.isCancelled = true
                 e.player.sendMessage(
                     mod.append(
-                        text("당신은 채팅을 칠 수 없습니다: ").color(TextColor.color(0x00ff5555))).append(
+                        text("${Language[managedPlayer.lang, "player.cantchat"]}: ").color(TextColor.color(0x00ff5555))).append(
                         text("muted").color(TextColor.color(0x00ffaa00)))
                 )
             }
