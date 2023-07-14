@@ -3,13 +3,15 @@ package io.github.kuroka3.playermanager.Commands
 import io.github.kuroka3.playermanager.Class.ManagedPlayer
 import io.github.kuroka3.playermanager.PlayerManager
 import io.github.kuroka3.playermanager.Utils.CaseManager
+import io.github.kuroka3.playermanager.Utils.Language
+import io.github.kuroka3.playermanager.Utils.SendersLang
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
 import io.github.monun.kommand.kommand
 import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.TextColor.color
-import org.bukkit.Bukkit
+import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import java.lang.Exception
 import java.time.LocalDateTime
@@ -53,7 +55,7 @@ object Kick {
                                 else moder = (sender as Player).uniqueId.toString()
 
                                 target.kick(
-                                    text("당신은 이 서버에서 추방되었습니다\n\n").color(color(0x00ff5555)).append(
+                                    text("${Language[ManagedPlayer(target as OfflinePlayer, PlayerManager.playerJSONFile).lang, "player.kicked"]}\n\n").color(color(0x00ff5555)).append(
                                         text("Reason: ").color(color(0x00aaaaaa))
                                     ).append(
                                         text(reason).color(color(0x00ffffff))
@@ -63,11 +65,13 @@ object Kick {
                                     mod.append(
                                         text(target.name).color(color(0x00ffff55))
                                     ).append(
-                                        text("님을 추방하였습니다: ").color(color(0x00ff5555))
+                                        text("${Language[SendersLang[sender, isPlayer], "sender.kick"]}: ").color(color(0x00ff5555))
                                     ).append(
                                         text(reason).color(color(0x00ffaa00))
                                     )
                                 )
+
+
 
                                 CaseManager.addCase(0, moder, target.uniqueId, reason, LocalDateTime.now())
                             } catch (e: Exception) {

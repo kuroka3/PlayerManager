@@ -3,6 +3,8 @@ package io.github.kuroka3.playermanager.Commands
 import io.github.kuroka3.playermanager.Class.ManagedPlayer
 import io.github.kuroka3.playermanager.PlayerManager
 import io.github.kuroka3.playermanager.Utils.CaseManager
+import io.github.kuroka3.playermanager.Utils.Language
+import io.github.kuroka3.playermanager.Utils.SendersLang
 import io.github.monun.kommand.KommandArgument
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
@@ -52,12 +54,12 @@ object UnWarn {
                                 val targetobj = CaseManager.getCase(target)
 
                                 if(targetobj == null) {
-                                    sender.sendMessage(mod.append(text("해당 Case 번호를 찾을 수 없습니다").color(color(0x00ff55555))))
+                                    sender.sendMessage(mod.append(text(Language[SendersLang[sender, isPlayer], "case.notfound"]).color(TextColor.color(0x00ff55555))))
                                     return@executes
                                 }
 
                                 if((targetobj["type"] as Long) != 2L) {
-                                    throw IllegalArgumentException("해당 Case의 Type이 Warn이 아닙니다.")
+                                    throw IllegalArgumentException(Language[SendersLang[sender, isPlayer], "exception.notwarn"])
                                 }
 
                                 val targetuuid: UUID = UUID.fromString(targetobj["target"] as String)
@@ -80,11 +82,11 @@ object UnWarn {
                                     val onp: Player = Bukkit.getPlayer(managedPlayer.p.uniqueId)!!
                                     onp.sendMessage(
                                         mod.append(
-                                            text("경고가 1회 해제되었습니다: ").color(color(0x00ff5555))
+                                            text("${Language[managedPlayer.lang, "player.unwarn"]}: ").color(color(0x00ff5555))
                                         ).append(
                                             text(reason).color(color(0x00ffaa00))
                                         ).append(
-                                            text("(총 ${managedPlayer.warns}회)")
+                                            text("(${Language[managedPlayer.lang, "warn.left"]}: ${managedPlayer.warns})")
                                                 .color(color(0x00ffff55))
                                         )
                                     )
@@ -94,11 +96,11 @@ object UnWarn {
                                     mod.append(
                                         text("${managedPlayer.p.name}").color(color(0x00ffff55))
                                     ).append(
-                                        text("님의 경고를 1회 취소하였습니다: ").color(color(0x00ff5555))
+                                        text("${Language[SendersLang[sender, isPlayer], "sender.unwarn"]}: ").color(color(0x00ff5555))
                                     ).append(
                                         text(reason).color(color(0x00ffaa00))
                                     ).append(
-                                        text("(총 ${managedPlayer.warns}회)")
+                                        text("(${Language[SendersLang[sender, isPlayer], "warn.left"]}: ${managedPlayer.warns})")
                                             .color(color(0x00ffff55))
                                     )
                                 )

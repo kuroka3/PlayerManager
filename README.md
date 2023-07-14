@@ -1,6 +1,3 @@
-# PlayerManager
-PlayerManager is a plugin to moderate players in server
-
 # 한국어 / Korean
 플레이어 관리를 위해 만든 플러그인
 
@@ -17,14 +14,14 @@ PlayerManager is a plugin to moderate players in server
  - 코드가 최적화 되었습니다.
  - Java -> Kotlin으로 언어가 변경되었습니다.
 
-## 구현 예정 기능: 정식버전까지 모든기능 구현이 목표
+## 구현 예정 기능
  - 유저 밴/경고/뮤트/킥 | 언밴/언경고(경고취소)/언뮤트 🟩
  - 권한 🟩
- - 관리 로그 🟥
  - 밴id 🟩
  - Case 시스템 🟩
  - 시간제 밴 🟩
- - 언어 설정 🟥
+ - 언어 설정 🟩
+ - 자세한 기능 설명은 [Wiki페이지](https://github.com/kuroka3/PlayerManager/wiki)를 참고하십시오.
 
 # 영어 / English
 A plugin I made to moderate player
@@ -42,11 +39,11 @@ uses own system.
  - Code optimized.
  - Language Changed: Java -> Kotlin.
 
-## Features: I'll make these features until release.
+## Features
  - User ban/warn/mute/kick | unban(pardon)/unwarn/unmute 🟩
  - Permissions 🟩
- - Moderation log 🟥
  - Ban ID 🟩
  - Case System 🟩
  - Period ban 🟩
- - Support two or more Language 🟥
+ - Support two or more Language 🟩
+ - See the [Wiki page](https://github.com/kuroka3/PlayerManager/wiki) for a detailed description of the features.

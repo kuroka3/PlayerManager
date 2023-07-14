@@ -17,6 +17,7 @@ class ManagedPlayer(pP: OfflinePlayer, jsonFileP: JSONFile) {
     var temp: Boolean
     var tounban: String
     var jobj: JSONObject
+    var lang: String
 
     init {
         this.p = pP
@@ -38,6 +39,7 @@ class ManagedPlayer(pP: OfflinePlayer, jsonFileP: JSONFile) {
         this.mute = jobj["mute"] as Boolean
         this.temp = jobj["temp"] as Boolean
         this.tounban = jobj["tounban"] as String
+        this.lang = jobj["lang"] as String
     }
 
     fun warn() {
@@ -135,10 +137,10 @@ class ManagedPlayer(pP: OfflinePlayer, jsonFileP: JSONFile) {
         var a: String = format
 
         if (tounban == "-1") {
-            a = a.replace("d", "0")
-            a = a.replace("h", "0")
-            a = a.replace("m", "0")
-            a = a.replace("s", "0")
+            a = a.replace("DDDDD", "0")
+            a = a.replace("HHHHH", "0")
+            a = a.replace("MMMMM", "0")
+            a = a.replace("SSSSS", "0")
 
             return a
         } else {
@@ -151,13 +153,19 @@ class ManagedPlayer(pP: OfflinePlayer, jsonFileP: JSONFile) {
                 ChronoUnit.SECONDS.between(now, tounbanLocalDateTime).toInt()%60
             )
 
-            a = a.replace("d", array[0].toString())
-            a = a.replace("h", array[1].toString())
-            a = a.replace("m", array[2].toString())
-            a = a.replace("s", array[3].toString())
+            a = a.replace("DDDDD", array[0].toString())
+            a = a.replace("HHHHH", array[1].toString())
+            a = a.replace("MMMMM", array[2].toString())
+            a = a.replace("SSSSS", array[3].toString())
 
             return a
         }
+    }
+
+    fun toLang(lang: String) {
+        this.lang = lang
+        jobj["lang"] = this.lang
+        save()
     }
 
     fun save() {

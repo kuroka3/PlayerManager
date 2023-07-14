@@ -1,11 +1,12 @@
 package io.github.kuroka3.playermanager
 
-import io.github.kuroka3.PlayerManager.Event.ConnectEvent
+import io.github.kuroka3.playermanager.Event.ConnectEvent
 import io.github.kuroka3.playermanager.Commands.*
 import io.github.kuroka3.playermanager.Event.CommandEvent
 import io.github.kuroka3.playermanager.Event.MutedChatEvent
 import io.github.kuroka3.playermanager.Utils.BanIDManager
 import io.github.kuroka3.playermanager.Utils.JSONFile
+import io.github.kuroka3.playermanager.Utils.Language
 import io.github.kuroka3.playermanager.Utils.SettingsManager
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
@@ -27,6 +28,7 @@ class PlayerManager : JavaPlugin() {
         if(!dataFolder.exists()) {
             dataFolder.mkdir()
             File("$dataFolder/data").mkdir()
+            File("$dataFolder/lang").mkdir()
             logger.warning("DONT LOAD THIS PLUGIN BY RELOAD")
             logger.warning("PLEASE RESTART SERVER AFTER ADD THIS PLUGIN")
         }
@@ -45,8 +47,11 @@ class PlayerManager : JavaPlugin() {
         Kick.registerKommand()
         GiveReason.registerKommand()
         UnWarn.registerKommand()
+        UnMute.registerKommand()
+        FundamentalCommand.registerKommand()
 
         SettingsManager.load()
         BanIDManager.setInit()
+        Language.load()
     }
 }

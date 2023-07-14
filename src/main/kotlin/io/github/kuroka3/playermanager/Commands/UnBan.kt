@@ -3,6 +3,8 @@ package io.github.kuroka3.playermanager.Commands
 import io.github.kuroka3.playermanager.Class.ManagedPlayer
 import io.github.kuroka3.playermanager.PlayerManager
 import io.github.kuroka3.playermanager.Utils.CaseManager
+import io.github.kuroka3.playermanager.Utils.Language
+import io.github.kuroka3.playermanager.Utils.SendersLang
 import io.github.monun.kommand.KommandArgument
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
@@ -75,11 +77,13 @@ object UnBan {
                                     mod.append(
                                         text("${managedPlayer.p.name}").color(color(0x00ffff55))
                                     ).append(
-                                        text("님의 차단을 해제했습니다: ").color(color(0x0055ff55))
+                                        text("${Language[SendersLang[sender, isPlayer], "sender.unban"]}: ").color(color(0x0055ff55))
                                     ).append(
                                         text(reason).color(color(0x00ffaa00))
                                     )
                                 )
+
+
 
                                 CaseManager.addCase(5, moder, managedPlayer.p.uniqueId, reason, LocalDateTime.now())
                             } catch (e: Exception) {

@@ -64,7 +64,7 @@ object CaseManager {
         try {
             fullobj = file.jsonObject!!
         } catch (e: NullPointerException) {
-            throw IllegalArgumentException("해당 Case 번호를 찾을 수 없습니다")
+            throw IllegalArgumentException(Language[SettingsManager["defaultLanguage", "en-us"].toString(), "case.notfound"])
         }
 
         val fullarray = fullobj["case"] as JSONArray
@@ -72,11 +72,11 @@ object CaseManager {
         try {
             obj = fullarray[caseInt - 1] as JSONObject
         } catch (e: NullPointerException) {
-            throw IllegalArgumentException("해당 Case 번호를 찾을 수 없습니다")
+            throw IllegalArgumentException(Language[SettingsManager["defaultLanguage", "en-us"].toString(), "case.notfound"])
         }
 
         if(obj["reason"] != "No Reason Given") {
-            throw IllegalAccessException("지정한 Case에 등록된 Reason이 [ No Reason Given ] 일 때만 Reason부여가 가능합니다.")
+            throw IllegalAccessException(Language[SettingsManager["defaultLanguage", "en-us"].toString(), "case.onlynoreason"])
         }
 
         obj["reason"] = reason

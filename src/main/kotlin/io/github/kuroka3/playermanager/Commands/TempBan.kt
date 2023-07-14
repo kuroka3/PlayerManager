@@ -2,8 +2,7 @@ package io.github.kuroka3.playermanager.Commands
 
 import io.github.kuroka3.playermanager.Class.ManagedPlayer
 import io.github.kuroka3.playermanager.PlayerManager
-import io.github.kuroka3.playermanager.Utils.BanIDManager
-import io.github.kuroka3.playermanager.Utils.CaseManager
+import io.github.kuroka3.playermanager.Utils.*
 import io.github.monun.kommand.StringType
 import io.github.monun.kommand.getValue
 import io.github.monun.kommand.kommand
@@ -120,7 +119,7 @@ object TempBan {
                                             val onp: Player = Bukkit.getPlayer(managedPlayer.p.uniqueId)!!
                                             onp.showTitle(
                                                 Title.title(
-                                                    text("당신은 이 서버에서 차단되었습니다")
+                                                    text(Language[managedPlayer.lang, "player.banned"])
                                                         .color(color(0x00ff5555)),
                                                     text(managedPlayer.banre)
                                                         .color(color(0x00ffaa00))
@@ -129,7 +128,7 @@ object TempBan {
 
                                             val kick: () -> Unit = {
                                                 onp.kick(
-                                                    text("당신은 이 서버에서 차단되었습니다\n\n${managedPlayer.getNokori(LocalDateTime.now(), "d일 h시간 m분 s초 남음")}\n\n").color(color(0x00ff5555)).append(
+                                                    text("${Language[managedPlayer.lang, "player.banned"]}\n\n${managedPlayer.getNokori(LocalDateTime.now(), Language[managedPlayer.lang, "player.tempban"])}\n\n").color(color(0x00ff5555)).append(
                                                         text("Reason: ").color(color(0x00aaaaaa))).append(
                                                         text(managedPlayer.banre).color(color(0x00ffffff))).append(
                                                         text("\n\nBan ID: ").color(color(0x00aaaaaa))).append(
@@ -148,11 +147,13 @@ object TempBan {
                                             mod.append(
                                                 text("${managedPlayer.p.name}").color(color(0x00ffff55))
                                             ).append(
-                                                text("님을 서버에서 차단했습니다: ").color(color(0x00ff5555))
+                                                text("${Language[SendersLang[sender, isPlayer], "sender.ban"]}: ").color(color(0x00ff5555))
                                             ).append(
                                                 text(reason).color(color(0x00ffaa00))
                                             )
                                         )
+
+
 
                                         BanIDManager.setBan(id, managedPlayer.p.uniqueId, moder, reason, LocalDateTime.now(), true, "$period$unit")
                                         CaseManager.addCase(4, moder, managedPlayer.p.uniqueId, reason, LocalDateTime.now(), "$period$unit")

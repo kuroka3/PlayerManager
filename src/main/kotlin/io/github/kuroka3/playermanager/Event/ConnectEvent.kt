@@ -1,7 +1,9 @@
-package io.github.kuroka3.PlayerManager.Event
+package io.github.kuroka3.playermanager.Event
 
 import io.github.kuroka3.playermanager.Class.ManagedPlayer
 import io.github.kuroka3.playermanager.PlayerManager
+import io.github.kuroka3.playermanager.Utils.Language
+import io.github.kuroka3.playermanager.Utils.SettingsManager
 import net.kyori.adventure.text.Component.text
 import net.kyori.adventure.text.format.TextColor
 import org.bukkit.OfflinePlayer
@@ -40,6 +42,7 @@ class ConnectEvent : Listener {
                 `object`["mute"] = false
                 `object`["temp"] = false
                 `object`["tounban"] = "-1"
+                `object`["lang"] = SettingsManager["defaultLanguage", "en-us"]
 
                 tempobj[e.player.uniqueId.toString()] = `object`
             } else if (userObject["name"] != e.player.name) {
@@ -54,7 +57,7 @@ class ConnectEvent : Listener {
         }
 
         try {
-            val p: ManagedPlayer = ManagedPlayer(e.player as OfflinePlayer, PlayerManager.instance.playerJSONFile)
+            val p = ManagedPlayer(e.player as OfflinePlayer, PlayerManager.instance.playerJSONFile)
 
             if(p.ban) {
                 if(p.temp) {
@@ -62,7 +65,9 @@ class ConnectEvent : Listener {
                         p.unban(true)
                     } else {
                         e.disallow(PlayerLoginEvent.Result.KICK_BANNED,
-                            text("당신은 이 서버에서 차단되었습니다\n\n${p.getNokori(LocalDateTime.now(), "d일 h시간 m분 s초 남음")}\n\n").color(TextColor.color(0x00ff5555)).append(
+                            text("${Language[p.lang, "player.banned"]}\n\n${p.getNokori(LocalDateTime.now(), Language[p.lang, "player.tempban"])}\n\n").color(
+                                TextColor.color(0x00ff5555)
+                            ).append(
                                 text("Reason: ").color(TextColor.color(0x00aaaaaa))).append(
                                 text(p.banre).color(TextColor.color(0x00ffffff))).append(
                                 text("\n\nBan ID: ").color(TextColor.color(0x00aaaaaa))).append(
@@ -70,16 +75,23 @@ class ConnectEvent : Listener {
                     }
                 } else {
                     e.disallow(PlayerLoginEvent.Result.KICK_BANNED,
-                        text("당신은 이 서버에서 차단되었습니다\n\n").color(TextColor.color(0x00ff5555)).append(
-                            text("Reason: ").color(TextColor.color(0x00aaaaaa))).append(
-                            text(p.banre).color(TextColor.color(0x00ffffff))).append(
-                            text("\n\nBan ID: ").color(TextColor.color(0x00aaaaaa))).append(
-                            text(p.banid).color(TextColor.color(0x00ffffff))))
+                        text("${Language[p.lang, "player.banned"]}\n\n")
+                            .color(TextColor.color(0x00ff5555)).append(
+                                text("Reason: ").color(TextColor.color(0x00aaaaaa))
+                            ).append(
+                                text(p.banre)
+                                    .color(TextColor.color(0x00ffffff))
+                            ).append(
+                                text("\n\nBan ID: ").color(TextColor.color(0x00aaaaaa))
+                            ).append(
+                                text(p.banid)
+                                    .color(TextColor.color(0x00ffffff))
+                            ))
                 }
             }
         } catch (ex: Exception) {
             ex.printStackTrace()
-            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, text("서버 연결 중 PlayerManager 플러그인에서 문제가 발생하였습니다\n\n서버 관리자에게 문의해 주십시오").color(TextColor.color(0x00ff55555)))
+            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, text(Language[SettingsManager["defaultLanguage", "en-us"].toString(), "connect.failed"]).color(TextColor.color(0x00ff55555)))
         }
     }
 }

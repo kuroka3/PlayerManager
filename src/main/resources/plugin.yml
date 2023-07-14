@@ -1,5 +1,5 @@
 name: 'PlayerManager'
-version: '${version}'
+version: '1.0'
 main: 'io.github.kuroka3.playermanager.PlayerManager'
 api-version: '1.20'
 libraries:
