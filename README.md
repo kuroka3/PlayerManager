@@ -21,7 +21,7 @@
  - Case 시스템 🟩
  - 시간제 밴 🟩
  - 언어 설정 🟩
- - 자세한 기능 설명은 Wiki페이지를 참고하십시오.
+ - 자세한 기능 설명은 [Wiki페이지](https://github.com/kuroka3/PlayerManager/wiki)를 참고하십시오.
 
 # 영어 / English
 A plugin I made to moderate player
@@ -46,4 +46,4 @@ uses own system.
  - Case System 🟩
  - Period ban 🟩
  - Support two or more Language 🟩
- - See the Wiki page for a detailed description of the features.
+ - See the [Wiki page](https://github.com/kuroka3/PlayerManager/wiki) for a detailed description of the features.
