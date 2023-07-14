@@ -1,6 +1,3 @@
-# PlayerManager
-PlayerManager is a plugin to moderate players in server
-
 # 한국어 / Korean
 플레이어 관리를 위해 만든 플러그인
 
